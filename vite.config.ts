@@ -13,5 +13,6 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     vue()
-  ]
+  ],
+  base:'./'
 })
