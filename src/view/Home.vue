@@ -1,13 +1,17 @@
 <template>
-  <div class="container">
+  <div class="container flex">
     <div class="side">
       <Menu></Menu>
+    </div>
+    <div class="content">
+      <About></About>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import Menu from '../components/Menu.vue'
+import About from '../components/Info/About.vue'
 </script>
 
 <style>
@@ -23,5 +27,8 @@ import Menu from '../components/Menu.vue'
   width:15vw;
   min-width:200px;
   height:100%;
+}
+.content{
+  flex:1
 }
 </style>
