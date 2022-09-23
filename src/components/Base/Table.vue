@@ -28,9 +28,10 @@
       <el-pagination
         v-model:currentPage="currentPage"
         v-model:page-size="pageSize"
-        :page-sizes="[100, 200, 300, 400]"
-        :layout="tableSetting.pagination.layout||'prev, pager, next'"
+        :page-sizes="[5, 10, 30, 100]"
+        :layout="tableSetting.pagination.layout==='thin'?'prev, jumper, next': (tableSetting.pagination.layout||'sizes, prev, jumper, next, total')"
         :total="tableSetting.pagination.total"
+        :background="true"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -76,4 +77,5 @@ const handleCurrentChange=(currentPage:Number)=>{
   .table{
     overflow: auto;
   }
+
 </style>

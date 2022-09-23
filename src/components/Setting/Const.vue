@@ -57,8 +57,7 @@ const constGroupTableSetting={
     field:'RN'
   },
   pagination:{
-    hide:false,
-    layout:"prev, pager, next",
+    layout:"thin",
     total:8999,
     handleCurrentChange:(e:String)=>{
       console.log(e);
@@ -88,8 +87,6 @@ const constTableSetting={
     field:'RN'
   },
   pagination:{
-    hide:false,
-    layout:"total, sizes, prev, pager, next, jumper",
     total:8999,
     handleCurrentChange:(currentPage:Number,pageSize:Number)=>{
       console.log(currentPage,pageSize);

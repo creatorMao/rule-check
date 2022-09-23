@@ -29,3 +29,15 @@
   width:100%;
   height:100%;
 }
+
+
+.el-pagination .el-select .el-input{
+  width:100px !important;
+}
+.el-pagination__total{
+  margin-left:16px;
+}
+.el-pagination__jump{
+  margin-left:initial;
+  margin-right:initial
+}
