@@ -10,8 +10,8 @@
     <div class="const">
       <Table 
         tableTitle="常量" 
-        :tableData="constGroupTableData" 
-        :tableSetting="constGroupTableSetting">
+        :tableData="constTableData" 
+        :tableSetting="constTableSetting">
       </Table>
     </div>
   </div>
@@ -19,28 +19,59 @@
 </template>
 
 <script lang="ts" setup>
+import { reactive } from 'vue';
 import Table from '../Base/Table.vue'
 
-const constGroupTableData = [
+const constGroupTableData = reactive([
   {
     GROUP_NAME: '2016-05-03',
-    REMARK: 'Tom'
-  },
+    REMARK: 'Tom',
+    RN:'1'
+  }
+])
+
+const constTableData = reactive([
   {
     GROUP_NAME: '2016-05-03',
-    REMARK: 'Tom'
-  },
-  {
-    GROUP_NAME: '2016-05-03',
-    REMARK: 'Tom'
-  },
-  {
-    GROUP_NAME: '2016-05-03',
-    REMARK: 'Tom'
-  },
-]
+    REMARK: 'Tom',
+    RN:'1'
+  }
+])
 
 const constGroupTableSetting={
+  columns:[
+    {
+      field:'GROUP_NAME',
+      title:'名称',
+      width:'180',
+      RN:'1'
+    },
+    {
+      field:'REMARK',
+      title:'备注',
+      width:'180',
+      RN:'1'
+    }
+  ],
+  serialNumberColumn:{
+    field:'RN'
+  },
+  pagination:{
+    hide:false,
+    layout:"prev, pager, next",
+    total:8999,
+    handleCurrentChange:(e:String)=>{
+      console.log(e);
+      constGroupTableData.push({
+        GROUP_NAME: '2016-05-03',
+        REMARK: 'Tom',
+        RN:""
+      });
+    }
+  }
+}
+
+const constTableSetting={
   columns:[
     {
       field:'GROUP_NAME',
@@ -52,7 +83,31 @@ const constGroupTableSetting={
       title:'备注',
       width:'180'
     }
-  ]
+  ],
+  serialNumberColumn:{
+    field:'RN'
+  },
+  pagination:{
+    hide:false,
+    layout:"total, sizes, prev, pager, next, jumper",
+    total:8999,
+    handleCurrentChange:(currentPage:Number,pageSize:Number)=>{
+      console.log(currentPage,pageSize);
+      constTableData.push({
+        GROUP_NAME: '2016-05-03',
+        REMARK: 'Tom',
+        RN:""
+      });
+    },
+    handleSizeChange:(currentPage:Number,pageSize:Number)=>{
+      console.log(currentPage,pageSize);
+      constTableData.push({
+        GROUP_NAME: '2016-05-03',
+        REMARK: 'Tom',
+        RN:""
+      });
+    }
+  }
 }
 </script>
 
