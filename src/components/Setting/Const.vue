@@ -19,8 +19,11 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive,getCurrentInstance } from 'vue';
 import Table from '../Base/Table.vue'
+const {proxy}=getCurrentInstance() as any
+
+proxy.$http.get("/config/constGroup/get");
 
 const constGroupTableData = reactive([
   {
