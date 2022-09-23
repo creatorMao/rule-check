@@ -13,7 +13,10 @@ import Title from '../Base/Title.vue'
 const props = defineProps({
   tableTitle: String,
   tableData:Object,
-  tableSetting:Object
+  tableSetting:{
+    type:Object,
+    required: true
+  }
 })
 </script>
 
