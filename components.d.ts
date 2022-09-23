@@ -8,16 +8,23 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     About: typeof import('./src/components/Info/About.vue')['default']
+    Const: typeof import('./src/components/Setting/Const.vue')['default']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
+    ElPageHeader: typeof import('element-plus/es')['ElPageHeader']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    Header: typeof import('./src/components/Base/Header.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Menu: typeof import('./src/components/Menu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Table: typeof import('./src/components/Base/Table.vue')['default']
+    Title: typeof import('./src/components/Base/Title.vue')['default']
   }
 }

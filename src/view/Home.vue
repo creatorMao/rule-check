@@ -4,7 +4,7 @@
       <Menu></Menu>
     </div>
     <div class="content">
-      <About></About>
+      <Const></Const>
     </div>
   </div>
 </template>
@@ -12,6 +12,7 @@
 <script setup lang="ts">
 import Menu from '../components/Menu.vue'
 import About from '../components/Info/About.vue'
+import Const from '../components/Setting/Const.vue'
 </script>
 
 <style>
