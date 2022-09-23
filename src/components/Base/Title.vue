@@ -13,13 +13,13 @@ const props = defineProps({
 <style scoped>
 .title{
   box-sizing: border-box;
-  height:40px;
-  padding:0 10px;
-  line-height: 40px;
+  height: 50px;
+  padding: 0 10px;
+  line-height: 50px;
   font-size: 16px;
-  color:#909399;
-  font-weight:bold;
-  background-color: #e8e8e8;
-  border-left:4px solid #409eff;
+  color: #606267;
+  font-weight: bold;
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #e8e8e8;
 }
 </style>

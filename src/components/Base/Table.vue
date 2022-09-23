@@ -8,10 +8,12 @@
         style="width: 100%" height="100%"
       >
         <el-table-column 
+          :fixed="true"
+          align="center"
           v-if="tableSetting.serialNumberColumn.hide!=true" 
           :prop="tableSetting.serialNumberColumn.field" 
-          :label="tableSetting.serialNumberColumn.title||'序号'" 
-          :width="tableSetting.serialNumberColumn.width||70" 
+          :label="tableSetting.serialNumberColumn.title||''" 
+          :width="tableSetting.serialNumberColumn.width||50" 
         />
         <el-table-column 
           v-for="item in tableSetting.columns" 

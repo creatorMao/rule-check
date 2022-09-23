@@ -1,6 +1,6 @@
 <template>
   <div class="const-container full-fill flex-row">
-    <div class="const-group"> 
+    <div class="const-group border-right"> 
       <Table 
         tableTitle="常量组" 
         :tableData="constGroupTableData" 
