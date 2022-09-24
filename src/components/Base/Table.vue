@@ -2,42 +2,47 @@
   <div class="table-container full-fill flex-column flex-space-between">
     <Title :title="tableTitle">
     </Title>
-    <div class="table full-fill flex-fill">
-      <el-table 
-        :data="innerTableData" 
-        style="width: 100%" height="100%"
-      >
-        <el-table-column 
-          :fixed="true"
-          align="center"
-          :v-if="!serialNumberColumnConfig.hide" 
-          :prop="serialNumberColumnConfig.field||'RN'" 
-          :label="serialNumberColumnConfig.title||''" 
-          :width="serialNumberColumnConfig.width||50" 
+    <div class="table-content flex-column" 
+         v-loading="isLoading"
+         element-loading-text="正在加载，请稍后"
+         >
+      <div class="table flex-fill">
+        <el-table 
+          :data="innerTableData" 
+          style="width: 100%;height:100%"
+        >
+          <el-table-column 
+            :fixed="true"
+            align="center"
+            :v-if="!serialNumberColumnConfig.hide" 
+            :prop="serialNumberColumnConfig.field||'RN'" 
+            :label="serialNumberColumnConfig.title||''" 
+            :width="serialNumberColumnConfig.width||50" 
+          />
+          <el-table-column 
+            v-for="item in tableSetting.columns" 
+            :prop="item.field" 
+            :label="item.title" 
+            :width="item.width" 
+            :align="item.align"
+            header-align="center"
+            :show-overflow-tooltip="true"
+          />
+        </el-table>
+      </div>
+      <div 
+        v-if="tableSetting.pagination.hide!=true" 
+        class="flex-row pagination"
+        >
+        <el-pagination
+          v-model:currentPage="currentPage"
+          v-model:page-size="pageSize"
+          :page-sizes="[5, 10, 30, 100]"
+          :layout="tableSetting.pagination.layout==='thin'?'prev, jumper, next,total': (tableSetting.pagination.layout||'sizes, prev, jumper, next, total')"
+          :total="total"
+          :background="true"
         />
-        <el-table-column 
-          v-for="item in tableSetting.columns" 
-          :prop="item.field" 
-          :label="item.title" 
-          :width="item.width" 
-          :align="item.align"
-          header-align="center"
-          :show-overflow-tooltip="true"
-        />
-      </el-table>
-    </div>
-    <div 
-      v-if="tableSetting.pagination.hide!=true" 
-      class="flex-row pagination"
-      >
-      <el-pagination
-        v-model:currentPage="currentPage"
-        v-model:page-size="pageSize"
-        :page-sizes="[5, 10, 30, 100]"
-        :layout="tableSetting.pagination.layout==='thin'?'prev, jumper, next,total': (tableSetting.pagination.layout||'sizes, prev, jumper, next, total')"
-        :total="total"
-        :background="true"
-      />
+      </div>
     </div>
   </div>
 </template>
@@ -55,7 +60,8 @@ const props = defineProps({
   tableSetting:{
     type:Object,
     required: true
-  }
+  },
+  isLoading:Boolean
 })
 
 const currentPage=ref(1)
@@ -100,7 +106,10 @@ const innerTableData = computed(() => {
 })
 
 const total=computed(()=>{
-  return props.tableData.length>0?(props.tableData[0][(props.tableSetting.pagination.totalField||'ROWS_TOTAL')]):0
+  const totalField=props.tableSetting.pagination.totalField||'ROWS_TOTAL';
+  const total= props.tableData.length>0?
+  (props.tableData[0][totalField]):0
+  return total||0
 })
 
 onMounted(()=>{
@@ -112,6 +121,9 @@ onMounted(()=>{
 </script>
 
 <style scoped>
+  .table-content{
+    height:calc(100% - 50px)
+  }
   .pagination{
     justify-content: end;
   }

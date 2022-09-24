@@ -30,6 +30,11 @@
   height:100%;
 }
 
-.border-right{
+.height-full{
+  height:100%;
+}
+
+.box{
+  box-sizing: border-box;
   border:1px solid #dcdfe6;
 }

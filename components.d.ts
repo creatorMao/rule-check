@@ -28,4 +28,7 @@ declare module '@vue/runtime-core' {
     Table: typeof import('./src/components/Base/Table.vue')['default']
     Title: typeof import('./src/components/Base/Title.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }

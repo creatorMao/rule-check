@@ -1,15 +1,17 @@
 <template>
   <div class="const-container full-fill flex-row">
-    <div class="const-group border-right"> 
+    <div class="box const-group height-full"> 
       <Table 
         tableTitle="常量组" 
+        :isLoading="groupTableIsLoading"
         :tableData="constGroupTableData" 
         :tableSetting="constGroupTableSetting">
       </Table>
     </div>
-    <div class="const">
+    <div class="const height-full">
       <Table 
         tableTitle="常量" 
+        :isLoading="constIsLoading"
         :tableData="constTableData" 
         :tableSetting="constTableSetting">
       </Table>
@@ -19,14 +21,15 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive,getCurrentInstance,onMounted } from 'vue';
+import { ref,reactive,getCurrentInstance,onMounted } from 'vue';
 import Table from '../Base/Table.vue'
 const {proxy}=getCurrentInstance() as any
 
 //常量组
 const constGroupTableData:any = reactive([]);
-
+const groupTableIsLoading=ref(false)
 const getConstGroupList=(pageIndex:Number,pageSize:Number)=>{
+  groupTableIsLoading.value=true;
   proxy.$http.request("/config/constGroup/get",'post',{
     pageIndex,
     pageSize
@@ -35,6 +38,7 @@ const getConstGroupList=(pageIndex:Number,pageSize:Number)=>{
     const {data}=res;
     constGroupTableData.length=0
     constGroupTableData.push(...data);
+    groupTableIsLoading.value=false
   });
 }
 
@@ -64,7 +68,7 @@ const constGroupTableSetting={
 
 //常量
 const constTableData:any = reactive([])
-
+const constIsLoading=ref(false)
 const constTableSetting={
   columns:[
     {
@@ -78,13 +82,15 @@ const constTableSetting={
       width:'180'
     }
   ],
+  initDataimmediately:true,
   pagination:{
     handleChange:(pageIndex:Number,pageSize:Number)=>{
+      constIsLoading.value=false;
       constTableData.push({
         GROUP_NAME: '2016-05-03',
-        REMARK: 'Tom',
-        RN:""
+        REMARK: 'Tom'
       });
+      constIsLoading.value=false;
     }
   }
 }
