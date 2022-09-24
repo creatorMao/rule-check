@@ -30,6 +30,7 @@ import Const from '../components/Setting/Const.vue'
   height:100%;
 }
 .content{
-  flex:1
+  flex:1;
+  overflow: auto;
 }
 </style>

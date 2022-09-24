@@ -19,27 +19,24 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive,getCurrentInstance } from 'vue';
+import { reactive,getCurrentInstance,onMounted } from 'vue';
 import Table from '../Base/Table.vue'
 const {proxy}=getCurrentInstance() as any
 
-proxy.$http.get("/config/constGroup/get");
+//常量组
+const constGroupTableData:any = reactive([]);
 
-const constGroupTableData = reactive([
-  {
-    GROUP_NAME: '2016-05-03',
-    REMARK: 'Tom',
-    RN:'1'
-  }
-])
-
-const constTableData = reactive([
-  {
-    GROUP_NAME: '2016-05-03',
-    REMARK: 'Tom',
-    RN:'1'
-  }
-])
+const getConstGroupList=(pageIndex:Number,pageSize:Number)=>{
+  proxy.$http.request("/config/constGroup/get",'post',{
+    pageIndex,
+    pageSize
+  })
+  .then((res:any)=>{
+    const {data}=res;
+    constGroupTableData.length=0
+    constGroupTableData.push(...data);
+  });
+}
 
 const constGroupTableSetting={
   columns:[
@@ -59,19 +56,23 @@ const constGroupTableSetting={
   serialNumberColumn:{
     field:'RN'
   },
+  initDataimmediately:true,
   pagination:{
     layout:"thin",
-    total:8999,
-    handleCurrentChange:(e:String)=>{
-      console.log(e);
-      constGroupTableData.push({
-        GROUP_NAME: '2016-05-03',
-        REMARK: 'Tom',
-        RN:""
-      });
+    handleChange:function(pageIndex:Number,pageSize:Number){
+      getConstGroupList(pageIndex,pageSize);
     }
   }
 }
+
+//常量
+const constTableData = reactive([
+  {
+    GROUP_NAME: '2016-05-03',
+    REMARK: 'Tom',
+    RN:'1'
+  }
+])
 
 const constTableSetting={
   columns:[
@@ -90,17 +91,7 @@ const constTableSetting={
     field:'RN'
   },
   pagination:{
-    total:8999,
-    handleCurrentChange:(currentPage:Number,pageSize:Number)=>{
-      console.log(currentPage,pageSize);
-      constTableData.push({
-        GROUP_NAME: '2016-05-03',
-        REMARK: 'Tom',
-        RN:""
-      });
-    },
-    handleSizeChange:(currentPage:Number,pageSize:Number)=>{
-      console.log(currentPage,pageSize);
+    handleChange:(pageIndex:Number,pageSize:Number)=>{
       constTableData.push({
         GROUP_NAME: '2016-05-03',
         REMARK: 'Tom',
@@ -115,8 +106,10 @@ const constTableSetting={
 <style scoped>
 .const-group{
   width:30%;
+  min-width:400px;
 }
 .const{
   flex:1;
+  min-width:500px
 }
 </style>
