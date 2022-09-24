@@ -49,13 +49,10 @@ const constGroupTableSetting={
     {
       field:'REMARK',
       title:'备注',
-      width:'180',
+      width:'150',
       RN:'1'
     }
   ],
-  serialNumberColumn:{
-    field:'RN'
-  },
   initDataimmediately:true,
   pagination:{
     layout:"thin",
@@ -66,13 +63,7 @@ const constGroupTableSetting={
 }
 
 //常量
-const constTableData = reactive([
-  {
-    GROUP_NAME: '2016-05-03',
-    REMARK: 'Tom',
-    RN:'1'
-  }
-])
+const constTableData:any = reactive([])
 
 const constTableSetting={
   columns:[
@@ -87,9 +78,6 @@ const constTableSetting={
       width:'180'
     }
   ],
-  serialNumberColumn:{
-    field:'RN'
-  },
   pagination:{
     handleChange:(pageIndex:Number,pageSize:Number)=>{
       constTableData.push({

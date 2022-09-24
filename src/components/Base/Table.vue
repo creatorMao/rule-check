@@ -10,16 +10,19 @@
         <el-table-column 
           :fixed="true"
           align="center"
-          :v-if="serialNumberColumnFlag" 
-          :prop="tableSetting.serialNumberColumn.field" 
-          :label="tableSetting.serialNumberColumn.title||''" 
-          :width="tableSetting.serialNumberColumn.width||50" 
+          :v-if="!serialNumberColumnConfig.hide" 
+          :prop="serialNumberColumnConfig.field||'RN'" 
+          :label="serialNumberColumnConfig.title||''" 
+          :width="serialNumberColumnConfig.width||50" 
         />
         <el-table-column 
           v-for="item in tableSetting.columns" 
           :prop="item.field" 
           :label="item.title" 
           :width="item.width" 
+          :align="item.align"
+          header-align="center"
+          :show-overflow-tooltip="true"
         />
       </el-table>
     </div>
@@ -32,7 +35,7 @@
         v-model:page-size="pageSize"
         :page-sizes="[5, 10, 30, 100]"
         :layout="tableSetting.pagination.layout==='thin'?'prev, jumper, next,total': (tableSetting.pagination.layout||'sizes, prev, jumper, next, total')"
-        :total="tableData.length>0?tableData[0][(tableSetting.pagination.totalField||'ROWS_TOTAL')]:0"
+        :total="total"
         :background="true"
       />
     </div>
@@ -56,7 +59,7 @@ const props = defineProps({
 })
 
 const currentPage=ref(1)
-const pageSize=ref(10);
+const pageSize=ref(30);
 
 watch(currentPage, (newValue, oldValue) => {
   const event= props.tableSetting.pagination.handleChange;
@@ -72,17 +75,32 @@ watch(pageSize,(newValue, oldValue)=>{
   }
 })
 
-const serialNumberColumnFlag= computed(() => {
-  return props.tableSetting.serialNumberColumn.hide!=true
+const serialNumberColumnConfig:any= computed(() => {
+  const config=props.tableSetting.serialNumberColumnConfig
+  if(config){
+    return {
+      ...config
+    }
+  }
+  return {
+    hide:false,
+    field:'RN',
+    title:'',
+    width:50
+  }
 })
 
 const innerTableData = computed(() => {
   return props.tableData.map((item:any,index:number)=>{
-    if(serialNumberColumnFlag){
+    if(!serialNumberColumnConfig.hide){
       item["RN"]=(index+1)+((currentPage.value-1)*pageSize.value)
     }
     return item;
   })
+})
+
+const total=computed(()=>{
+  return props.tableData.length>0?(props.tableData[0][(props.tableSetting.pagination.totalField||'ROWS_TOTAL')]):0
 })
 
 onMounted(()=>{
