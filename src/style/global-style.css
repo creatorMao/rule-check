@@ -12,6 +12,12 @@
   flex-direction: row;
 }
 
+.flex-row-cneter{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .flex-column{
   display: flex;
   flex-direction: column;
@@ -37,4 +43,8 @@
 .box{
   box-sizing: border-box;
   border:1px solid #dcdfe6;
+}
+
+.box-bottom{
+  border-bottom:1px solid #dcdfe6;
 }

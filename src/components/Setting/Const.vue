@@ -45,19 +45,49 @@ const getConstGroupList=(pageIndex:Number,pageSize:Number)=>{
 const constGroupTableSetting={
   columns:[
     {
+      type:'selection'
+    },
+    {
       field:'GROUP_NAME',
       title:'名称',
-      width:'180',
+      width:'190',
+      align:'left',
       RN:'1'
     },
     {
       field:'REMARK',
       title:'备注',
-      width:'150',
+      width:'190',
+      align:'left',
       RN:'1'
     }
   ],
   initDataimmediately:true,
+  buttons:[
+    {
+      title:'新增',
+      onClick:(e:any)=>{
+        console.log(e);
+      }
+    },
+    {
+      type:'danger',
+      title:'删除',
+      onClick:(e:any)=>{
+        console.log(e);
+        const rows=e.getSelectionRows();
+        const keys=rows.map((item:any)=>{
+          return item.ID
+        })
+        console.log(keys);
+      }
+    }
+  ],
+  events:{
+    rowClick:function(row:any, column:any, event:any){
+      console.log(row, column, event);
+    }
+  },
   pagination:{
     layout:"thin",
     handleChange:function(pageIndex:Number,pageSize:Number){
@@ -82,6 +112,26 @@ const constTableSetting={
       width:'180'
     }
   ],
+  buttons:[
+    {
+      title:'新增',
+      onClick:(e:any)=>{
+        console.log(e);
+      }
+    },
+    {
+      type:'danger',
+      title:'删除',
+      onClick:(e:any)=>{
+        console.log(e);
+        const rows=e.getSelectionRows();
+        const keys=rows.map((item:any)=>{
+          return item.ID
+        })
+        console.log(keys);
+      }
+    }
+  ],
   initDataimmediately:true,
   pagination:{
     handleChange:(pageIndex:Number,pageSize:Number)=>{
@@ -99,7 +149,7 @@ const constTableSetting={
 
 <style scoped>
 .const-group{
-  width:30%;
+  width:40%;
   min-width:400px;
 }
 .const{

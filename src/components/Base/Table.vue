@@ -2,6 +2,18 @@
   <div class="table-container full-fill flex-column flex-space-between">
     <Title :title="tableTitle">
     </Title>
+    <div 
+      class="table-button flex-row-cneter box-bottom" 
+      v-if="(tableSetting.buttons||[]).length>0"
+    >
+      <el-button 
+        v-for="item in tableSetting.buttons" 
+        :type="item.type||'primary'"
+        @click="item.onClick($refs.innerTable)"
+      >
+        {{item.title}}
+      </el-button>
+    </div>
     <div class="table-content flex-column" 
          v-loading="isLoading"
          element-loading-text="正在加载，请稍后"
@@ -10,21 +22,24 @@
         <el-table 
           :data="innerTableData" 
           style="width: 100%;height:100%"
+          ref="innerTable"
+          @row-click="rowClick"
         >
           <el-table-column 
             :fixed="true"
             align="center"
             :v-if="!serialNumberColumnConfig.hide" 
-            :prop="serialNumberColumnConfig.field||'RN'" 
-            :label="serialNumberColumnConfig.title||''" 
-            :width="serialNumberColumnConfig.width||50" 
+            :prop="serialNumberColumnConfig.field" 
+            :label="serialNumberColumnConfig.title" 
+            :width="serialNumberColumnConfig.width" 
           />
           <el-table-column 
             v-for="item in tableSetting.columns" 
+            :type="item.type"
             :prop="item.field" 
             :label="item.title" 
-            :width="item.width" 
-            :align="item.align"
+            :width="item.type==='selection'?45:item.width" 
+            :align="item.align||'center'"
             header-align="center"
             :show-overflow-tooltip="true"
           />
@@ -92,7 +107,7 @@ const serialNumberColumnConfig:any= computed(() => {
     hide:false,
     field:'RN',
     title:'',
-    width:50
+    width:45
   }
 })
 
@@ -118,11 +133,24 @@ onMounted(()=>{
   }
 })
 
+const rowClick=(row:any, column:any, event:any)=>{
+  const rowClick=props.tableSetting.events.rowClick
+  if(rowClick){
+    rowClick(row, column, event);
+  }
+}
+
 </script>
 
 <style scoped>
   .table-content{
-    height:calc(100% - 50px)
+    height: 1px; 
+    flex: 1;
+  }
+  .table-button{
+    box-sizing: border-box;
+    height:50px;
+    padding:0 10px;
   }
   .pagination{
     justify-content: end;
