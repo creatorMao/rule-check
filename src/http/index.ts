@@ -4,7 +4,7 @@ const http:any = axios.create({
   baseURL: 'http://192.168.1.201:3000/',
 });
 
-http.request = (url, method, param) => {
+http.request = (url:String, method:String, param:any) => {
   return new Promise((resolve, reject) => {
     http({
       method,
@@ -12,11 +12,11 @@ http.request = (url, method, param) => {
       data: method === 'post' ? param : {},
       param: method === 'get' ? param : {}
     })
-      .then((res) => {
+      .then((res:any) => {
         const { data } = res;
         resolve(data);
       })
-      .catch((err) => {
+      .catch((err:any) => {
         reject(err)
       })
   })
