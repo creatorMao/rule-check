@@ -7,9 +7,9 @@
       v-if="(tableSetting.buttons||[]).length>0"
     >
       <el-button 
-        v-for="item in tableSetting.buttons" 
+        v-for="(item,index) in tableSetting.buttons" 
         :type="item.type||'primary'"
-        @click="buttonPreDispatch($refs.innerTable,item)"
+        @click="buttonClickPreDispatch($refs.innerTable,item,index)"
       >
         {{item.title}}
       </el-button>
@@ -63,7 +63,7 @@
   <DeleteDialog 
     :state="deleteDialogState"
     @onCancel="onDeleteDialogCancel"
-    @onOk="onDeleteDialogOk(deleteButton,$refs.innerTable)"
+    @onOk="onDeleteDialogOk(deleteOk,$refs.innerTable)"
   >
   </DeleteDialog>
 </template>
@@ -73,12 +73,6 @@ import { ref,computed,onMounted,watch,getCurrentInstance } from 'vue';
 import Title from '../Base/Title.vue'
 import DeleteDialog from '../Base/Dialog/DeleteDialog.vue'
 import {useDeleteDialogHook,deleteDialogCheck} from '../../Hook/Dialog/deleteDialog'
-
-const {
-  state:deleteDialogState,
-  onDeleteDialogCancel,
-  onDeleteDialogOk
-}= useDeleteDialogHook();
 
 const props = defineProps({
   sortNumber:Boolean,
@@ -155,24 +149,35 @@ const rowClick=(row:any, column:any, event:any)=>{
   }
 }
 
-let deleteButton=function(tableRef:any){
-  props.tableSetting.buttons.forEach((item:any)=>{
-    if(item.title==='删除'){
-      if(item.onOk){
-        item.onOk(tableRef);
-      }
-    }
-  })
+const {
+  state:deleteDialogState,
+  onDeleteDialogCancel,
+  onDeleteDialogOk
+}= useDeleteDialogHook();
+
+let deleteOk=function(tableRef:any){
+  let button=props.tableSetting.buttons[currentClickButtonIndex]
+  button.onOk&&button.onOk(tableRef,tableRef.getSelectionRows());
 }
 
-const buttonPreDispatch=(tableRef:any,buttonConfig:any)=>{
-  if(buttonConfig.title==='删除'){
-    deleteDialogCheck(tableRef.getSelectionRows(),deleteDialogState)
-  }
-  else{
+let currentClickButtonIndex=0;
+const buttonClickPreDispatch=(tableRef:any,buttonConfig:any,index:number)=>{
+  currentClickButtonIndex=index;
+  switch(buttonConfig.bizType){
+    //删除
+    case "delete":
+      deleteDialogCheck(tableRef.getSelectionRows(),deleteDialogState)
+      break;
+    //弹窗
+    case "open":
+      deleteDialogCheck(tableRef.getSelectionRows(),deleteDialogState)
+      break;
+    //普通
+    default:
+      buttonConfig.onClick&&buttonConfig.onClick(tableRef)
+      break;
   }
 }
-
 </script>
 
 <style scoped>

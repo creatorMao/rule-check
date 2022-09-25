@@ -25,17 +25,6 @@ import { ref,reactive,getCurrentInstance,onMounted } from 'vue';
 import Table from '../Base/Table.vue'
 const {proxy}=getCurrentInstance() as any
 
-// const Ok=()=>{
-//   onOk(()=>{
-//     proxy.$http.request("/config/constGroup/delete",'post',{
-//       idList:JSON.stringify([])
-//     })
-//   .then((res:any)=>{
-//     getConstGroupList(1,30);
-//   });
-//   })
-// }
-
 //常量组
 const constGroupTableData:any = reactive([]);
 const groupTableIsLoading=ref(false)
@@ -83,10 +72,16 @@ const constGroupTableSetting={
     },
     {
       type:'danger',
+      bizType:'delete',
       title:'删除',
-      onOk:(e)=>{
+      onOk:(e:any)=>{
         console.log(e.getSelectionRows());
-        console.log(e);
+        // proxy.$http.request("/config/constGroup/delete",'post',{
+        //   idList:JSON.stringify([])
+        // })
+        // .then((res:any)=>{
+        //   getConstGroupList(1,30);
+        // });
       }
     }
   ],
@@ -124,18 +119,17 @@ const constTableSetting={
   ],
   buttons:[
     {
-      title:'新增'
+      title:'新增',
+      onClick:(e:any)=>{
+        console.log(e);
+      }
     },
     {
       type:'danger',
       title:'删除',
-      onOk:(e:any)=>{
-        console.log(e);
-        const rows=e.getSelectionRows();
-        const keys=rows.map((item:any)=>{
-          return item.ID
-        })
-        console.log(keys);
+      bizType:'delete',
+      onOk:(e:any,selectedRows:Array<any>)=>{
+        console.log(selectedRows);
       }
     }
   ],

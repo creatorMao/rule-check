@@ -22,11 +22,10 @@ const deleteDialogCheck=(list:Array<any>,state:any)=>{
 const useDeleteDialogHook:Function=()=>{
   const state=ref(false)
 
-  const onDeleteDialogOk=(callBack:Function,tableRef:any)=>{
+  const onDeleteDialogOk=(callBack:Function,param:any)=>{
     state.value=false
-    console.log(callBack);
     if(callBack){
-      callBack(tableRef);
+      callBack(param);
     }
   }
   
