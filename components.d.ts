@@ -8,7 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     About: typeof import('./src/components/Info/About.vue')['default']
-    Const: typeof import('./src/components/Setting/Const.vue')['default']
+    Const: typeof import('./src/components/Config/Const.vue')['default']
     DeleteDialog: typeof import('./src/components/Base/Dialog/DeleteDialog.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']

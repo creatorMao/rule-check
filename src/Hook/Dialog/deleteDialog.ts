@@ -5,7 +5,7 @@ const getDeleteFlag=(list:Array<any>)=>{
   return list.length>0
 }
 
-const preCheck=(list:Array<any>,state:any)=>{
+const deleteDialogCheck=(list:Array<any>,state:any)=>{
   const flag=getDeleteFlag(list);
   if(flag){
     state.value=true
@@ -22,25 +22,26 @@ const preCheck=(list:Array<any>,state:any)=>{
 const useDeleteDialogHook:Function=()=>{
   const state=ref(false)
 
-  const onOk=(callBack:Function)=>{
+  const onDeleteDialogOk=(callBack:Function,tableRef:any)=>{
     state.value=false
+    console.log(callBack);
     if(callBack){
-      callBack();
+      callBack(tableRef);
     }
   }
   
-  const onCancel=()=>{
+  const onDeleteDialogCancel=()=>{
     state.value=false
   }
 
   return {
     state,
-    onOk,
-    onCancel
+    onDeleteDialogOk,
+    onDeleteDialogCancel
   }
 }
 
 export  {
-  preCheck,
+  deleteDialogCheck,
   useDeleteDialogHook
 }

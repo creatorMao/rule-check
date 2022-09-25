@@ -16,12 +16,6 @@
         :tableSetting="constTableSetting">
       </Table>
     </div>
-    <DeleteDialog 
-      :state="deleteDialogState"
-      @onOk="Ok"
-      @onCancel="onCancel"
-    >
-    </DeleteDialog>
   </div>
   
 </template>
@@ -29,26 +23,18 @@
 <script lang="ts" setup>
 import { ref,reactive,getCurrentInstance,onMounted } from 'vue';
 import Table from '../Base/Table.vue'
-import DeleteDialog from '../Base/Dialog/DeleteDialog.vue'
-import {useDeleteDialogHook,preCheck} from '../../Hook/deleteDialog'
 const {proxy}=getCurrentInstance() as any
 
-const {
-  state:deleteDialogState,
-  onOk,
-  onCancel
-}= useDeleteDialogHook();
-
-const Ok=()=>{
-  onOk(()=>{
-    proxy.$http.request("/config/constGroup/delete",'post',{
-      idList:JSON.stringify([])
-    })
-  .then((res:any)=>{
-    getConstGroupList(1,30);
-  });
-  })
-}
+// const Ok=()=>{
+//   onOk(()=>{
+//     proxy.$http.request("/config/constGroup/delete",'post',{
+//       idList:JSON.stringify([])
+//     })
+//   .then((res:any)=>{
+//     getConstGroupList(1,30);
+//   });
+//   })
+// }
 
 //常量组
 const constGroupTableData:any = reactive([]);
@@ -98,10 +84,9 @@ const constGroupTableSetting={
     {
       type:'danger',
       title:'删除',
-      onClick:(e:any)=>{
-        preCheck(e.getSelectionRows().map((item:any)=>{
-          return item.ID
-        }),deleteDialogState);
+      onOk:(e)=>{
+        console.log(e.getSelectionRows());
+        console.log(e);
       }
     }
   ],
@@ -118,13 +103,14 @@ const constGroupTableSetting={
   }
 }
 
-
-
 //常量
 const constTableData:any = reactive([])
 const constIsLoading=ref(false)
 const constTableSetting={
   columns:[
+    {
+      type:'selection'
+    },
     {
       field:'GROUP_NAME',
       title:'名称',
@@ -138,15 +124,12 @@ const constTableSetting={
   ],
   buttons:[
     {
-      title:'新增',
-      onClick:(e:any)=>{
-        console.log(e);
-      }
+      title:'新增'
     },
     {
       type:'danger',
       title:'删除',
-      onClick:(e:any)=>{
+      onOk:(e:any)=>{
         console.log(e);
         const rows=e.getSelectionRows();
         const keys=rows.map((item:any)=>{

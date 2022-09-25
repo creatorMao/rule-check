@@ -9,7 +9,7 @@
       <el-button 
         v-for="item in tableSetting.buttons" 
         :type="item.type||'primary'"
-        @click="item.onClick($refs.innerTable)"
+        @click="buttonPreDispatch($refs.innerTable,item)"
       >
         {{item.title}}
       </el-button>
@@ -60,11 +60,26 @@
       </div>
     </div>
   </div>
+  <DeleteDialog 
+    :state="deleteDialogState"
+    @onCancel="onDeleteDialogCancel"
+    @onOk="onDeleteDialogOk(deleteButton,$refs.innerTable)"
+  >
+  </DeleteDialog>
 </template>
 
 <script setup lang="ts">
-import { ref,computed,onMounted,watch } from 'vue';
+import { ref,computed,onMounted,watch,getCurrentInstance } from 'vue';
 import Title from '../Base/Title.vue'
+import DeleteDialog from '../Base/Dialog/DeleteDialog.vue'
+import {useDeleteDialogHook,deleteDialogCheck} from '../../Hook/Dialog/deleteDialog'
+
+const {
+  state:deleteDialogState,
+  onDeleteDialogCancel,
+  onDeleteDialogOk
+}= useDeleteDialogHook();
+
 const props = defineProps({
   sortNumber:Boolean,
   tableTitle: String,
@@ -137,6 +152,24 @@ const rowClick=(row:any, column:any, event:any)=>{
   const rowClick=props.tableSetting.events.rowClick
   if(rowClick){
     rowClick(row, column, event);
+  }
+}
+
+let deleteButton=function(tableRef:any){
+  props.tableSetting.buttons.forEach((item:any)=>{
+    if(item.title==='删除'){
+      if(item.onOk){
+        item.onOk(tableRef);
+      }
+    }
+  })
+}
+
+const buttonPreDispatch=(tableRef:any,buttonConfig:any)=>{
+  if(buttonConfig.title==='删除'){
+    deleteDialogCheck(tableRef.getSelectionRows(),deleteDialogState)
+  }
+  else{
   }
 }
 
