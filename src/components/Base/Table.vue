@@ -84,7 +84,7 @@ import DeleteDialog from '../Base/Dialog/DeleteDialog.vue'
 import {
   useDeleteDialogHook,
   deleteDialogCheck
-} from '../../Hook/Dialog/deleteDialog'
+} from '../../hook/Dialog/deleteDialog'
 import { loadingConst } from '../../helper/constHelper'
 
 const props = defineProps({
