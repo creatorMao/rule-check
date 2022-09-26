@@ -26,40 +26,27 @@ import Table from '../Base/Table.vue'
 import { useLodingHook } from '../../hook/loading'
 import { queryType, deleteType } from '../../helper/constHelper'
 import { createDeleteSuccessMessage } from '../../helper/messageHelper'
+import {
+  getConstGroupList,
+  deleteConstGroup
+} from '../../model/config/constGroupModel'
 const { proxy } = getCurrentInstance() as any
 
 //常量组
 const constGroupTableData: any = reactive([])
 const loadingConfig = useLodingHook()
 
-const getConstGroupList = (pageIndex: Number, pageSize: Number) => {
+const getConstGroupListWrap = (pageIndex: Number, pageSize: Number) => {
   loadingConfig.setLoadingState(true, queryType)
-  proxy.$http
-    .request('/config/constGroup/get', 'post', {
-      pageIndex,
-      pageSize
-    })
+
+  getConstGroupList(pageIndex, pageSize)
     .then((res: any) => {
       const { data } = res
       constGroupTableData.length = 0
       constGroupTableData.push(...data)
     })
-    .catch(() => {})
     .finally(() => {
       loadingConfig.setLoadingState(false, queryType)
-    })
-}
-
-const deleteConstGroup = async (idList: Array<any>) => {
-  loadingConfig.setLoadingState(true, deleteType)
-  proxy.$http
-    .request('/config/constGroup/delete', 'post', {
-      idList: JSON.stringify(idList)
-    })
-    .then((res: any) => {
-      loadingConfig.setLoadingState(false, deleteType)
-      createDeleteSuccessMessage()
-      getConstGroupList(1, 30)
     })
 }
 
@@ -96,11 +83,16 @@ const constGroupTableSetting = {
       bizType: 'delete',
       title: '删除',
       onOk: (e: any) => {
+        loadingConfig.setLoadingState(true, deleteType)
+
         const idList = e.getSelectionRows().map((row: any) => {
           return row.ID
         })
-        deleteConstGroup(idList).then((res) => {
-          getConstGroupList(1, 30)
+
+        deleteConstGroup(idList).then(() => {
+          loadingConfig.setLoadingState(false, deleteType)
+          createDeleteSuccessMessage()
+          getConstGroupListWrap(1, 30)
         })
       }
     }
@@ -113,7 +105,7 @@ const constGroupTableSetting = {
   pagination: {
     layout: 'thin',
     handleChange: function (pageIndex: Number, pageSize: Number) {
-      getConstGroupList(pageIndex, pageSize)
+      getConstGroupListWrap(pageIndex, pageSize)
     }
   }
 }
