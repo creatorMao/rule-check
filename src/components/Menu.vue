@@ -1,37 +1,78 @@
 <template>
   <el-menu
-    default-active="1-3"	
-    :default-openeds="['1','2']"
+    router
+    :default-active="defaultActive"
+    :default-openeds="defaultOpens"
+    ref="innerMenu"
     class="el-menu-container"
   >
-    <el-sub-menu index="1">
+    <el-sub-menu
+      v-for="(menuGroup, menuGroupIndex) in menuList"
+      :index="menuGroup.id"
+    >
       <template #title>
         <el-icon><setting /></el-icon>
-        <span>规则配置</span>
+        <span>{{ menuGroup.name }}</span>
       </template>
-      <el-menu-item index="1-1">常量配置页面</el-menu-item>
-      <el-menu-item index="1-2">参数配置页面</el-menu-item>
-      <el-menu-item index="1-3">规则配置</el-menu-item>
-    </el-sub-menu>
-    <el-sub-menu index="2">
-      <template #title>
-        <el-icon><icon-menu /></el-icon>
-        <span>基础信息</span>
-      </template>
-      <el-menu-item index="2-1">页面路由信息</el-menu-item>
-      <el-menu-item index="2-2">版本信息</el-menu-item>
+      <el-menu-item
+        v-for="(menuItem, menuItemIndex) in menuGroup.children"
+        :index="menuItem.url"
+        >常量配置页面</el-menu-item
+      >
     </el-sub-menu>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted, getCurrentInstance } from 'vue'
+import { Router, useRouter } from 'vue-router'
 import {
   Document,
   Menu as IconMenu,
   Location,
-  Setting,
+  Setting
 } from '@element-plus/icons-vue'
+
+const router: Router = useRouter()
+
+const menuList = [
+  {
+    id: '1',
+    name: '规则配置',
+    children: [
+      {
+        id: '3',
+        url: '/home/config/const',
+        name: '常量配置页面'
+      }
+    ]
+  },
+  {
+    id: '2',
+    name: '基础信息',
+    children: [
+      {
+        id: '5',
+        url: '/home/about',
+        name: '关于'
+      }
+    ]
+  }
+]
+
+const defaultOpens = computed(() => {
+  return menuList.map((group, index) => {
+    return group.id
+  })
+})
+
+const defaultActive = computed(() => {
+  return menuList[0].children[0].url
+})
+
+onMounted(() => {
+  router.push(defaultActive.value)
+})
 </script>
 
 <style scoped>

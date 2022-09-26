@@ -4,7 +4,7 @@
       <Menu></Menu>
     </div>
     <div class="content">
-      <Const></Const>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -16,21 +16,21 @@ import Const from '../components/Config/Const.vue'
 </script>
 
 <style>
-#app{
-  width:100%;
-  height:100%;
+#app {
+  width: 100%;
+  height: 100%;
   position: fixed;
 }
-.container{
+.container {
   height: 100%;
 }
-.side{
-  width:15vw;
-  min-width:200px;
-  height:100%;
+.side {
+  width: 15vw;
+  min-width: 200px;
+  height: 100%;
 }
-.content{
-  flex:1;
+.content {
+  flex: 1;
   overflow: auto;
 }
 </style>
