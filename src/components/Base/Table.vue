@@ -3,8 +3,8 @@
     <Title :title="tableTitle"> </Title>
     <div
       class="table-content"
-      v-loading="isLoading"
-      element-loading-text="正在加载，请稍后"
+      v-loading="innerLoadingConfig.isLoading"
+      :element-loading-text="innerLoadingConfig.text"
     >
       <div class="full-fill flex-column">
         <div
@@ -85,8 +85,10 @@ import {
   useDeleteDialogHook,
   deleteDialogCheck
 } from '../../Hook/Dialog/deleteDialog'
+import { loadingConst } from '../../helper/constHelper'
 
 const props = defineProps({
+  loadingConfig: Object,
   sortNumber: Boolean,
   tableTitle: String,
   tableData: {
@@ -96,8 +98,22 @@ const props = defineProps({
   tableSetting: {
     type: Object,
     required: true
-  },
-  isLoading: Boolean
+  }
+})
+
+const innerLoadingConfig = computed(() => {
+  if (!props.loadingConfig) {
+    return {
+      type: 'query',
+      isLoading: false,
+      text: loadingConst['query']
+    }
+  }
+  return {
+    type: props.loadingConfig.type,
+    isLoading: props.loadingConfig.isLoading,
+    text: loadingConst[props.loadingConfig.type]
+  }
 })
 
 const currentPage = ref(1)

@@ -3,7 +3,7 @@
     <div class="box const-group height-full">
       <Table
         tableTitle="常量组"
-        :isLoading="groupTableIsLoading"
+        :loadingConfig="loadingConfig"
         :tableData="constGroupTableData"
         :tableSetting="constGroupTableSetting"
       >
@@ -12,7 +12,6 @@
     <div class="const height-full">
       <Table
         tableTitle="常量"
-        :isLoading="constIsLoading"
         :tableData="constTableData"
         :tableSetting="constTableSetting"
       >
@@ -24,14 +23,17 @@
 <script lang="ts" setup>
 import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
 import Table from '../Base/Table.vue'
+import { useLodingHook } from '../../hook/loading'
+import { queryType, deleteType } from '../../helper/constHelper'
+import { createDeleteSuccessMessage } from '../../helper/messageHelper'
 const { proxy } = getCurrentInstance() as any
-
 //常量组
 const constGroupTableData: any = reactive([])
-const groupTableIsLoading = ref(false)
+
+const loadingConfig = useLodingHook()
 
 const getConstGroupList = (pageIndex: Number, pageSize: Number) => {
-  groupTableIsLoading.value = true
+  loadingConfig.setLoadingState(true, queryType)
   proxy.$http
     .request('/config/constGroup/get', 'post', {
       pageIndex,
@@ -41,17 +43,21 @@ const getConstGroupList = (pageIndex: Number, pageSize: Number) => {
       const { data } = res
       constGroupTableData.length = 0
       constGroupTableData.push(...data)
-      groupTableIsLoading.value = false
+      loadingConfig.setLoadingState(false, queryType)
     })
 }
 
-const groupTableDeleteLoding = ref(false)
 const deleteConstGroup = async (idList: Array<any>) => {
+  loadingConfig.setLoadingState(true, deleteType)
   proxy.$http
     .request('/config/constGroup/delete', 'post', {
       idList: JSON.stringify(idList)
     })
-    .then((res: any) => {})
+    .then((res: any) => {
+      loadingConfig.setLoadingState(false, deleteType)
+      createDeleteSuccessMessage()
+      getConstGroupList(1, 30)
+    })
 }
 
 const constGroupTableSetting = {

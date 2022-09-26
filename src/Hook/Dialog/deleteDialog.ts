@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { ElMessage } from 'element-plus'
+import {createWarningMessage} from '../../helper/messageHelper'
 
 const getDeleteFlag=(list:Array<any>)=>{
   return list.length>0
@@ -11,11 +11,7 @@ const deleteDialogCheck=(list:Array<any>,state:any)=>{
     state.value=true
   }
   else{
-    ElMessage({
-      showClose: true,
-      message: '请至少选择一行！',
-      type: 'warning',
-    })
+    createWarningMessage('请至少选择一行！')
   }
 }
 
