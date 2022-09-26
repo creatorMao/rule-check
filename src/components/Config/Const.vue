@@ -28,6 +28,7 @@ const {proxy}=getCurrentInstance() as any
 //常量组
 const constGroupTableData:any = reactive([]);
 const groupTableIsLoading=ref(false)
+
 const getConstGroupList=(pageIndex:Number,pageSize:Number)=>{
   groupTableIsLoading.value=true;
   proxy.$http.request("/config/constGroup/get",'post',{
@@ -39,6 +40,16 @@ const getConstGroupList=(pageIndex:Number,pageSize:Number)=>{
     constGroupTableData.length=0
     constGroupTableData.push(...data);
     groupTableIsLoading.value=false
+  });
+}
+
+const groupTableDeleteLoding=ref(false)
+const deleteConstGroup=async (idList:Array<any>)=>{
+  proxy.$http.request("/config/constGroup/delete",'post',{
+    idList:JSON.stringify(idList)
+  })
+  .then((res:any)=>{
+    
   });
 }
 
@@ -75,13 +86,13 @@ const constGroupTableSetting={
       bizType:'delete',
       title:'删除',
       onOk:(e:any)=>{
-        console.log(e.getSelectionRows());
-        // proxy.$http.request("/config/constGroup/delete",'post',{
-        //   idList:JSON.stringify([])
-        // })
-        // .then((res:any)=>{
-        //   getConstGroupList(1,30);
-        // });
+        const idList=e.getSelectionRows().map((row:any)=>{
+          return row.ID
+        })
+        deleteConstGroup(idList)
+        .then((res)=>{
+          getConstGroupList(1,30);
+        })
       }
     }
   ],

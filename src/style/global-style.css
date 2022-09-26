@@ -28,6 +28,7 @@
 }
 
 .flex-fill{
+  height:1px;
   flex:1;
 }
 

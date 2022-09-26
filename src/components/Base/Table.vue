@@ -2,6 +2,11 @@
   <div class="table-container full-fill flex-column flex-space-between">
     <Title :title="tableTitle">
     </Title>
+    <div    
+        class="table-content" 
+        v-loading="isLoading"
+        element-loading-text="正在加载，请稍后">
+        <div class="full-fill flex-column">
     <div 
       class="table-button flex-row-cneter box-bottom" 
       v-if="(tableSetting.buttons||[]).length>0"
@@ -14,10 +19,7 @@
         {{item.title}}
       </el-button>
     </div>
-    <div class="table-content flex-column" 
-         v-loading="isLoading"
-         element-loading-text="正在加载，请稍后"
-         >
+    <div class="flex-column flex-fill">
       <div class="table flex-fill">
         <el-table 
           :data="innerTableData" 
@@ -59,6 +61,8 @@
         />
       </div>
     </div>
+    </div>
+  </div>
   </div>
   <DeleteDialog 
     :state="deleteDialogState"
