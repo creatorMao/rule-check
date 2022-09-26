@@ -43,6 +43,9 @@ const getConstGroupList = (pageIndex: Number, pageSize: Number) => {
       const { data } = res
       constGroupTableData.length = 0
       constGroupTableData.push(...data)
+    })
+    .catch(() => {})
+    .finally(() => {
       loadingConfig.setLoadingState(false, queryType)
     })
 }

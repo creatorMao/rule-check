@@ -27,7 +27,16 @@ const createWarningMessage=(message:String)=>{
   })
 }
 
+const createErrorMessage=(message:String,duration:any=undefined)=>{
+  createMessage({
+    message: message,
+    type: 'error',
+    duration
+  })
+}
+
 export {
+  createErrorMessage,
   createDeleteSuccessMessage,
   createWarningMessage,
   createMessage
