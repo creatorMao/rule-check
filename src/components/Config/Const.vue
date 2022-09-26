@@ -27,9 +27,9 @@ import { useLodingHook } from '../../hook/loading'
 import { queryType, deleteType } from '../../helper/constHelper'
 import { createDeleteSuccessMessage } from '../../helper/messageHelper'
 const { proxy } = getCurrentInstance() as any
+
 //常量组
 const constGroupTableData: any = reactive([])
-
 const loadingConfig = useLodingHook()
 
 const getConstGroupList = (pageIndex: Number, pageSize: Number) => {
