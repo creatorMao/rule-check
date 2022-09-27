@@ -2,6 +2,7 @@
   <el-dialog
     :title="title"
     :model-value="setting.visible"
+    :close-on-click-modal="false"
     :show-close="false"
     :destroy-on-close="true"
     ref="formRef"
