@@ -51,14 +51,14 @@ const loadingConfig = useLodingHook()
 const getConstGroupListWrap = (pageIndex: Number, pageSize: Number) => {
   loadingConfig.setLoadingState(true, queryType)
 
-  getConstGroupList(pageIndex, pageSize)
+  return getConstGroupList(pageIndex, pageSize)
     .then((res: any) => {
       const { data } = res
       constGroupTableData.length = 0
       constGroupTableData.push(...data)
     })
     .finally(() => {
-      loadingConfig.setLoadingState(false, queryType)
+      loadingConfig.setLoadingState(false)
     })
 }
 
@@ -102,11 +102,15 @@ const constGroupTableSetting = {
           return row.ID
         })
 
-        deleteConstGroup(idList).then(() => {
-          getConstGroupListWrap(1, 30)
-          createDeleteSuccessMessage()
-          loadingConfig.setLoadingState(false, deleteType)
-        })
+        deleteConstGroup(idList)
+          .then(() => {
+            createDeleteSuccessMessage()
+            loadingConfig.setLoadingState(false)
+            return getConstGroupListWrap(1, 30)
+          })
+          .finally(() => {
+            loadingConfig.setLoadingState(false)
+          })
       }
     }
   ],
@@ -132,10 +136,14 @@ const editDialogFormData = {}
 const groupEditonOk = (e: any) => {
   const formData = vc.refs.constGroupEditRef.formData
   loadingConfig.setLoadingState(true, addType)
-  addConstGroup(formData).then(() => {
-    createAddSuccessMessage()
-    getConstGroupListWrap(1, 30)
-  })
+  addConstGroup(formData)
+    .then(() => {
+      createAddSuccessMessage()
+      return getConstGroupListWrap(1, 30)
+    })
+    .finally(() => {
+      loadingConfig.setLoadingState(false)
+    })
 }
 
 //常量
