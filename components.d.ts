@@ -26,6 +26,7 @@ declare module '@vue/runtime-core' {
     Header: typeof import('./src/components/Base/Header.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Menu: typeof import('./src/components/Menu.vue')['default']
+    Route: typeof import('./src/components/Info/Route.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Table: typeof import('./src/components/Base/Table.vue')['default']

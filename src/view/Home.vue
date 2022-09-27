@@ -1,7 +1,7 @@
 <template>
   <div class="container flex">
     <div class="side">
-      <Menu></Menu>
+      <Menu :menuList="menuList" :openAll="true"></Menu>
     </div>
     <div class="content">
       <router-view></router-view>
@@ -13,6 +13,38 @@
 import Menu from '../components/Menu.vue'
 import About from '../components/Info/About.vue'
 import Const from '../components/Config/Const.vue'
+
+const menuList = [
+  {
+    id: '1',
+    name: '规则配置',
+    icon: 'Setting',
+    children: [
+      {
+        id: '3',
+        url: '/home/config/const',
+        name: '常量配置页面'
+      }
+    ]
+  },
+  {
+    id: '2',
+    name: '基础信息',
+    icon: 'Help',
+    children: [
+      {
+        id: '5',
+        url: '/home/route',
+        name: '路由信息'
+      },
+      {
+        id: '5',
+        url: '/home/about',
+        name: '关于'
+      }
+    ]
+  }
+]
 </script>
 
 <style>
