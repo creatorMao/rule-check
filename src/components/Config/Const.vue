@@ -8,6 +8,12 @@
         :tableSetting="constGroupTableSetting"
       >
       </Table>
+      <EditDialog :setting="editDialogSetting" @onOk="groupEditonOk">
+        <ConstGroupEdit
+          :formData="editDialogFormData"
+          ref="constGroupEditRef"
+        ></ConstGroupEdit>
+      </EditDialog>
     </div>
     <div class="const height-full">
       <Table
@@ -23,14 +29,20 @@
 <script lang="ts" setup>
 import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
 import Table from '../Base/Table.vue'
+import ConstGroupEdit from '../Config/ConstGroupEdit.vue'
+import EditDialog from '../Base/Dialog/EditDialog.vue'
 import { useLodingHook } from '../../hook/loading'
-import { queryType, deleteType } from '../../helper/constHelper'
-import { createDeleteSuccessMessage } from '../../helper/messageHelper'
+import { queryType, deleteType, addType } from '../../helper/constHelper'
 import {
-  getConstGroupList,
-  deleteConstGroup
+  createDeleteSuccessMessage,
+  createAddSuccessMessage
+} from '../../helper/messageHelper'
+import {
+  addConstGroup,
+  deleteConstGroup,
+  getConstGroupList
 } from '../../model/config/constGroupModel'
-const { proxy } = getCurrentInstance() as any
+const vc = getCurrentInstance() as any
 
 //常量组
 const constGroupTableData: any = reactive([])
@@ -76,6 +88,7 @@ const constGroupTableSetting = {
       title: '新增',
       onClick: (e: any) => {
         console.log(e)
+        editDialogSetting.visible = true
       }
     },
     {
@@ -90,9 +103,9 @@ const constGroupTableSetting = {
         })
 
         deleteConstGroup(idList).then(() => {
-          loadingConfig.setLoadingState(false, deleteType)
-          createDeleteSuccessMessage()
           getConstGroupListWrap(1, 30)
+          createDeleteSuccessMessage()
+          loadingConfig.setLoadingState(false, deleteType)
         })
       }
     }
@@ -108,6 +121,21 @@ const constGroupTableSetting = {
       getConstGroupListWrap(pageIndex, pageSize)
     }
   }
+}
+
+const editDialogSetting = reactive({
+  visible: false
+})
+
+const editDialogFormData = {}
+
+const groupEditonOk = (e: any) => {
+  const formData = vc.refs.constGroupEditRef.formData
+  loadingConfig.setLoadingState(true, addType)
+  addConstGroup(formData).then(() => {
+    createAddSuccessMessage()
+    getConstGroupListWrap(1, 30)
+  })
 }
 
 //常量

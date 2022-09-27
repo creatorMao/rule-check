@@ -13,7 +13,12 @@ const getConstGroupList = (pageIndex: Number, pageSize: Number) => {
     })
 }
 
+const addConstGroup=(groupInfo:Object)=>{
+  return http.request('/config/constGroup/add', 'post', groupInfo)
+}
+
 export {
+  addConstGroup,
   getConstGroupList,
   deleteConstGroup
 }
