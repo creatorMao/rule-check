@@ -12,3 +12,9 @@
 .el-pagination{
   padding: 10px 5px;
 }
+
+
+/* 弹出框 */
+.el-dialog{
+  min-width:680px
+}
