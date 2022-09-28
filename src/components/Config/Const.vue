@@ -168,22 +168,22 @@ const groupEditonOk = (closeDialog: Function) => {
     editConstGroup(formData)
       .then((res: any) => {
         createUpdateSuccessMessage()
+        closeDialog()
         return getConstGroupListWrap(1, 30)
       })
       .finally(() => {
         closeLoading()
-        closeDialog()
       })
   } else {
     openAddDialogLoading()
     addConstGroup(formData)
       .then(() => {
         createAddSuccessMessage()
+        closeDialog()
         return getConstGroupListWrap(1, 30)
       })
       .finally(() => {
         closeLoading()
-        closeDialog()
       })
   }
 }
