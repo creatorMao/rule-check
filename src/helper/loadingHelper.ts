@@ -18,6 +18,10 @@ const openAddDialogLoading=()=>{
   openDialogLoading(addLoadingText);
 }
 
+const openDeleteDialogLoading=()=>{
+  openDialogLoading(deleteLoadingText);
+}
+
 const openQueryDialogLoading=()=>{
   openDialogLoading(queryLoadingText);
 }
@@ -33,6 +37,7 @@ const closeLoading=()=>{
 
 export {
   openAddDialogLoading,
+  openDeleteDialogLoading,
   openQueryDialogLoading,
   openUpdateDialogLoading,
   closeLoading

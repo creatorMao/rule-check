@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    v-model="state"
+    :model-value="setting.visible"
     :show-close="false"
     :close-on-click-modal="false"
     title="温馨提示"
@@ -21,8 +21,8 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-  state: {
-    type: Boolean,
+  setting: {
+    type: Object,
     required: true
   }
 })
@@ -30,6 +30,7 @@ const props = defineProps({
 const emit = defineEmits(['onCancel', 'onOk'])
 
 const onCancel = () => {
+  props.setting.visible = false
   emit('onCancel')
 }
 

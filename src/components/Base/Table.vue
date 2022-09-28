@@ -95,7 +95,7 @@
     </div>
   </div>
   <DeleteDialog
-    :state="deleteDialogState"
+    :setting="deleteDialogSetting"
     @onCancel="onDeleteDialogCancel"
     @onOk="onDeleteDialogOk(deleteOk, $refs.innerTable)"
   >
@@ -192,14 +192,14 @@ const rowClick = (row: any, column: any, event: any) => {
 }
 
 const {
-  state: deleteDialogState,
+  setting: deleteDialogSetting,
   onDeleteDialogCancel,
   onDeleteDialogOk
 } = useDeleteDialogHook()
 
-let deleteOk = function (tableRef: any) {
+let deleteOk = function (tableRef: any, closeDialog: Function) {
   let button = props.tableSetting.buttons[currentClickButtonIndex]
-  button.onOk && button.onOk(tableRef, tableRef.getSelectionRows())
+  button.onOk && button.onOk(tableRef, tableRef.getSelectionRows(), closeDialog)
 }
 
 let currentClickButtonIndex = 0
@@ -212,11 +212,11 @@ const buttonClickPreDispatch = (
   switch (buttonConfig.bizType) {
     //删除
     case 'delete':
-      deleteDialogCheck(tableRef.getSelectionRows(), deleteDialogState)
+      deleteDialogCheck(tableRef.getSelectionRows(), deleteDialogSetting)
       break
     //弹窗
     case 'open':
-      deleteDialogCheck(tableRef.getSelectionRows(), deleteDialogState)
+      deleteDialogCheck(tableRef.getSelectionRows(), deleteDialogSetting)
       break
     //普通
     default:

@@ -52,6 +52,7 @@ import {
 } from '../../model/config/constGroupModel'
 import {
   openAddDialogLoading,
+  openDeleteDialogLoading,
   openQueryDialogLoading,
   openUpdateDialogLoading,
   closeLoading
@@ -118,8 +119,8 @@ const constGroupTableSetting = {
       type: 'danger',
       bizType: 'delete',
       title: '删除',
-      onOk: (e: any) => {
-        loadingConfig.setLoadingState(true, deleteLoadingText)
+      onOk: (e: any, rows: Object, closeDialog: Function) => {
+        openDeleteDialogLoading()
 
         const idList = e.getSelectionRows().map((row: any) => {
           return row.ID
@@ -128,11 +129,12 @@ const constGroupTableSetting = {
         deleteConstGroup(idList)
           .then(() => {
             createDeleteSuccessMessage()
-            loadingConfig.setLoadingState(false)
+            closeLoading()
+            closeDialog()
             return getConstGroupListWrap(1, 30)
           })
           .finally(() => {
-            loadingConfig.setLoadingState(false)
+            closeLoading
           })
       }
     }

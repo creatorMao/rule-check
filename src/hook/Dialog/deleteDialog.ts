@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { reactive } from 'vue';
 import {createWarningMessage} from '../../helper/messageHelper'
 
 const getDeleteFlag=(list:Array<any>)=>{
@@ -8,7 +8,7 @@ const getDeleteFlag=(list:Array<any>)=>{
 const deleteDialogCheck=(list:Array<any>,state:any)=>{
   const flag=getDeleteFlag(list);
   if(flag){
-    state.value=true
+    state.visible=true
   }
   else{
     createWarningMessage('请至少选择一行！')
@@ -16,21 +16,24 @@ const deleteDialogCheck=(list:Array<any>,state:any)=>{
 }
 
 const useDeleteDialogHook:Function=()=>{
-  const state=ref(false)
+  const setting=reactive({
+    visible:false
+  })
 
   const onDeleteDialogOk=(callBack:Function,param:any)=>{
-    state.value=false
     if(callBack){
-      callBack(param);
+      callBack(param,()=>{
+        setting.visible=false
+      });
     }
   }
   
   const onDeleteDialogCancel=()=>{
-    state.value=false
+    setting.visible=false
   }
 
   return {
-    state,
+    setting,
     onDeleteDialogOk,
     onDeleteDialogCancel
   }
