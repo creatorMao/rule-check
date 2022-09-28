@@ -18,6 +18,7 @@
     <div class="const height-full">
       <Table
         tableTitle="常量"
+        :loadingConfig="{}"
         :tableData="constTableData"
         :tableSetting="constTableSetting"
       >
@@ -108,7 +109,6 @@ const constGroupTableSetting = {
     {
       title: '新增',
       onClick: (e: any) => {
-        console.log(e)
         editDialogSetting.visible = true
         editDialogSetting.title = '新增'
         editDialogFormData.ID = ''
@@ -161,7 +161,6 @@ const editDialogFormData = reactive({
 
 const groupEditonOk = (closeDialog: Function) => {
   const formData = vc.refs.constGroupEditRef.formData
-  console.log(formData.ID)
   if (formData.ID) {
     openUpdateDialogLoading()
     editConstGroup(formData)
@@ -209,9 +208,7 @@ const constTableSetting = {
   buttons: [
     {
       title: '新增',
-      onClick: (e: any) => {
-        console.log(e)
-      }
+      onClick: (e: any) => {}
     },
     {
       type: 'danger',

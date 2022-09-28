@@ -3,8 +3,8 @@
     <Title :title="tableTitle"> </Title>
     <div
       class="table-content"
-      v-loading="innerLoadingConfig.isLoading"
-      :element-loading-text="innerLoadingConfig.text"
+      v-loading="loadingConfig.isLoading"
+      :element-loading-text="loadingConfig.text"
     >
       <div class="full-fill flex-column">
         <div
@@ -112,7 +112,10 @@ import {
 } from '../../hook/Dialog/deleteDialog'
 
 const props = defineProps({
-  loadingConfig: Object,
+  loadingConfig: {
+    type: Object,
+    required: true
+  },
   sortNumber: Boolean,
   tableTitle: String,
   tableData: {
@@ -122,20 +125,6 @@ const props = defineProps({
   tableSetting: {
     type: Object,
     required: true
-  }
-})
-
-const innerLoadingConfig = computed(() => {
-  if (!props.loadingConfig) {
-    return {
-      isLoading: false,
-      text: ''
-    }
-  }
-  return {
-    type: props.loadingConfig.type,
-    isLoading: props.loadingConfig.isLoading,
-    text: props.loadingConfig.text
   }
 })
 
