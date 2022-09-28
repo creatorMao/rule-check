@@ -81,7 +81,6 @@ const constGroupTableSetting = {
     {
       title: '编辑',
       onClick: function (e: number, row: any) {
-        console.log(row)
         editDialogSetting.visible = true
         editDialogSetting.title = '编辑'
         editDialogFormData.ID = row.ID
