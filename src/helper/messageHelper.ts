@@ -1,5 +1,5 @@
 import { ElMessage } from 'element-plus'
-import { successConst, addType,deleteType,queryType, updateType  } from './constHelper'
+import {  addSuccessText,deleteSuccessText,querySuccessText,updateSuccessText } from './constHelper'
 
 const defaultConfig={
   showClose: true,
@@ -15,21 +15,21 @@ const createMessage=function(config:any){
 
 const createAddSuccessMessage=(message:String='')=>{
   createMessage({
-    message: message||successConst[`${addType}`],
+    message: addSuccessText,
     type: 'success'
   })
 }
 
 const createDeleteSuccessMessage=(message:String='')=>{
   createMessage({
-    message: message||successConst[`${deleteType}`],
+    message: deleteSuccessText,
     type: 'success'
   })
 }
 
 const createUpdateSuccessMessage=(message:String='')=>{
   createMessage({
-    message: message||successConst[`${updateType}`],
+    message: updateSuccessText,
     type: 'success'
   })
 }

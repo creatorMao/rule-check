@@ -39,8 +39,9 @@ const onCancel = () => {
 }
 
 const onOk = function () {
-  props.setting.visible = false
-  emit('onOk')
+  emit('onOk', () => {
+    props.setting.visible = false
+  })
 }
 </script>
 

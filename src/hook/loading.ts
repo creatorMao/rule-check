@@ -1,16 +1,14 @@
 import { reactive } from 'vue'
-import { queryType, deleteType } from '../helper/constHelper'
 
-const setLoadingState:Function=function(this: any, flag:boolean,type:string){
-  if(type){
-    this.type=type
+const setLoadingState:Function=function(this: any, flag:boolean,text:string){
+  if(text){
+    this.text=text
   }
   this.isLoading=flag
 }
 
 const useLodingHook:Function=()=>{
   const loadingConfig:any = reactive({
-    type: queryType,
     isLoading: false
   })
 

@@ -110,7 +110,6 @@ import {
   useDeleteDialogHook,
   deleteDialogCheck
 } from '../../hook/Dialog/deleteDialog'
-import { loadingConst } from '../../helper/constHelper'
 
 const props = defineProps({
   loadingConfig: Object,
@@ -129,15 +128,14 @@ const props = defineProps({
 const innerLoadingConfig = computed(() => {
   if (!props.loadingConfig) {
     return {
-      type: 'query',
       isLoading: false,
-      text: loadingConst['query']
+      text: ''
     }
   }
   return {
     type: props.loadingConfig.type,
     isLoading: props.loadingConfig.isLoading,
-    text: loadingConst[props.loadingConfig.type]
+    text: props.loadingConfig.text
   }
 })
 

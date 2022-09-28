@@ -33,10 +33,10 @@ import ConstGroupEdit from '../Config/ConstGroupEdit.vue'
 import EditDialog from '../Base/Dialog/EditDialog.vue'
 import { useLodingHook } from '../../hook/loading'
 import {
-  queryType,
-  deleteType,
-  addType,
-  updateType
+  addLoadingText,
+  deleteLoadingText,
+  queryLoadingText,
+  updateLoadingText
 } from '../../helper/constHelper'
 import {
   createUpdateSuccessMessage,
@@ -49,6 +49,12 @@ import {
   deleteConstGroup,
   getConstGroupList
 } from '../../model/config/constGroupModel'
+import {
+  openAddDialogLoading,
+  openQueryDialogLoading,
+  openUpdateDialogLoading,
+  closeLoading
+} from '../../helper/loadingHelper'
 const vc = getCurrentInstance() as any
 
 //常量组
@@ -56,7 +62,7 @@ const constGroupTableData: any = reactive([])
 const loadingConfig = useLodingHook()
 
 const getConstGroupListWrap = (pageIndex: Number, pageSize: Number) => {
-  loadingConfig.setLoadingState(true, queryType)
+  loadingConfig.setLoadingState(true, queryLoadingText)
 
   return getConstGroupList(pageIndex, pageSize)
     .then((res: any) => {
@@ -106,6 +112,7 @@ const constGroupTableSetting = {
         console.log(e)
         editDialogSetting.visible = true
         editDialogSetting.title = '新增'
+        editDialogFormData.ID = ''
       }
     },
     {
@@ -113,7 +120,7 @@ const constGroupTableSetting = {
       bizType: 'delete',
       title: '删除',
       onOk: (e: any) => {
-        loadingConfig.setLoadingState(true, deleteType)
+        loadingConfig.setLoadingState(true, deleteLoadingText)
 
         const idList = e.getSelectionRows().map((row: any) => {
           return row.ID
@@ -149,30 +156,34 @@ const editDialogSetting = reactive({
   title: ''
 })
 
-const editDialogFormData = reactive({})
+const editDialogFormData = reactive({
+  ID: ''
+})
 
-const groupEditonOk = (e: any) => {
+const groupEditonOk = (closeDialog: Function) => {
   const formData = vc.refs.constGroupEditRef.formData
   console.log(formData.ID)
   if (formData.ID) {
-    loadingConfig.setLoadingState(true, updateType)
+    openUpdateDialogLoading()
     editConstGroup(formData)
       .then((res: any) => {
         createUpdateSuccessMessage()
         return getConstGroupListWrap(1, 30)
       })
       .finally(() => {
-        loadingConfig.setLoadingState(false)
+        closeLoading()
+        closeDialog()
       })
   } else {
-    loadingConfig.setLoadingState(true, addType)
+    openAddDialogLoading()
     addConstGroup(formData)
       .then(() => {
         createAddSuccessMessage()
         return getConstGroupListWrap(1, 30)
       })
       .finally(() => {
-        loadingConfig.setLoadingState(false)
+        closeLoading()
+        closeDialog()
       })
   }
 }
