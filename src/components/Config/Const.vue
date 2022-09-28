@@ -92,7 +92,7 @@ const constGroupTableSetting = {
   columns: [
     {
       field: 'GROUP_NAME',
-      title: '名称',
+      title: '常量组名称',
       width: '190',
       align: 'left',
       RN: '1'
