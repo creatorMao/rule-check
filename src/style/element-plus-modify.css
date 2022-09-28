@@ -18,3 +18,14 @@
 .el-dialog{
   min-width:680px
 }
+
+
+/* 编辑列,按钮居中 */
+.button-column .cell {
+  display: flex;
+  justify-content: center;
+}
+
+.serial-number-column .cell{
+  padding:0px 6px;
+}

@@ -24,11 +24,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-
-const innerFormData = reactive({
-  GROUP_NAME: '',
-  REMARK: ''
-})
+import { getConstGroupDetail } from '../../model/config/constGroupModel'
 
 const props = defineProps({
   formData: {
@@ -36,6 +32,23 @@ const props = defineProps({
     required: true
   }
 })
+
+const innerFormData = reactive({
+  ID: '',
+  GROUP_NAME: '',
+  REMARK: ''
+})
+
+const id = props.formData.ID
+
+if (id) {
+  getConstGroupDetail(id).then((res: any) => {
+    const { data } = res
+    innerFormData.ID = data[0].ID
+    innerFormData.GROUP_NAME = data[0].GROUP_NAME
+    innerFormData.REMARK = data[0].REMARK
+  })
+}
 
 defineExpose({
   formData: innerFormData

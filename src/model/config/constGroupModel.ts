@@ -7,11 +7,22 @@ const deleteConstGroup = async (idList: Array<any>) => {
 }
 
 const getConstGroupList = (pageIndex: Number, pageSize: Number) => {
-  return http.request('/config/constGroup/get', 'post', {
+  return http.request('/config/constGroup/list', 'post', {
       pageIndex,
       pageSize
     })
 }
+
+const getConstGroupDetail = (id:String) => {
+  return http.request('/config/constGroup/detail', 'post', {
+      id
+    })
+}
+
+const editConstGroup=(groupInfo:Object)=>{
+  return http.request('/config/constGroup/edit', 'post', groupInfo)
+}
+
 
 const addConstGroup=(groupInfo:Object)=>{
   return http.request('/config/constGroup/add', 'post', groupInfo)
@@ -19,6 +30,8 @@ const addConstGroup=(groupInfo:Object)=>{
 
 export {
   addConstGroup,
+  editConstGroup,
+  getConstGroupDetail,
   getConstGroupList,
   deleteConstGroup
 }

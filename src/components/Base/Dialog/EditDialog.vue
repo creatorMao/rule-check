@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="title"
+    :title="setting.title"
     :model-value="setting.visible"
     :close-on-click-modal="false"
     :show-close="false"
@@ -40,21 +40,8 @@ const onCancel = () => {
 
 const onOk = function () {
   props.setting.visible = false
-  // console.log(slots.default()[0].ref.i.refs.)
-  console.log(slots)
   emit('onOk')
 }
-
-const title = computed(() => {
-  if (!props.setting.title) {
-    if (JSON.stringify(props.setting.data) === '{}' || !props.setting.data) {
-      return '新增'
-    } else {
-      return '编辑'
-    }
-  }
-  return props.setting.title
-})
 </script>
 
 <style scoped></style>

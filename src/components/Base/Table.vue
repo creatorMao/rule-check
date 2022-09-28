@@ -34,15 +34,40 @@
                 :prop="serialNumberColumnConfig.field"
                 :label="serialNumberColumnConfig.title"
                 :width="serialNumberColumnConfig.width"
+                class-name="serial-number-column"
               />
+              <el-table-column
+                type="selection"
+                width="40"
+                v-if="tableSetting.checkBox"
+                align="center"
+                class-name="button-column"
+              />
+              <el-table-column
+                label="操作"
+                width="60px"
+                header-align="center"
+                align="center"
+                class-name="button-column"
+              >
+                <template #default="scope">
+                  <el-button
+                    v-for="item in tableSetting.editColumnButtons"
+                    size="small"
+                    @click.stop="item.onClick(scope.$index, scope.row)"
+                    >{{ item.title }}</el-button
+                  >
+                </template>
+              </el-table-column>
               <el-table-column
                 v-for="item in tableSetting.columns"
                 :type="item.type"
                 :prop="item.field"
                 :label="item.title"
-                :width="item.type === 'selection' ? 45 : item.width"
+                :width="item.width"
                 :align="item.align || 'center'"
                 header-align="center"
+                :formatter="item.formatter"
                 :show-overflow-tooltip="true"
               />
             </el-table>
@@ -144,7 +169,7 @@ const serialNumberColumnConfig: any = computed(() => {
     hide: false,
     field: 'RN',
     title: '',
-    width: 45
+    width: 40
   }
 })
 
@@ -211,6 +236,10 @@ const buttonClickPreDispatch = (
       buttonConfig.onClick && buttonConfig.onClick(tableRef)
       break
   }
+}
+
+const editColumnButtonOnClick = (e: any, callBack: Function) => {
+  callBack(e, e)
 }
 </script>
 

@@ -32,13 +32,20 @@ import Table from '../Base/Table.vue'
 import ConstGroupEdit from '../Config/ConstGroupEdit.vue'
 import EditDialog from '../Base/Dialog/EditDialog.vue'
 import { useLodingHook } from '../../hook/loading'
-import { queryType, deleteType, addType } from '../../helper/constHelper'
 import {
+  queryType,
+  deleteType,
+  addType,
+  updateType
+} from '../../helper/constHelper'
+import {
+  createUpdateSuccessMessage,
   createDeleteSuccessMessage,
   createAddSuccessMessage
 } from '../../helper/messageHelper'
 import {
   addConstGroup,
+  editConstGroup,
   deleteConstGroup,
   getConstGroupList
 } from '../../model/config/constGroupModel'
@@ -63,10 +70,19 @@ const getConstGroupListWrap = (pageIndex: Number, pageSize: Number) => {
 }
 
 const constGroupTableSetting = {
-  columns: [
+  checkBox: true,
+  editColumnButtons: [
     {
-      type: 'selection'
-    },
+      title: '编辑',
+      onClick: function (e: number, row: any) {
+        console.log(row)
+        editDialogSetting.visible = true
+        editDialogSetting.title = '编辑'
+        editDialogFormData.ID = row.ID
+      }
+    }
+  ],
+  columns: [
     {
       field: 'GROUP_NAME',
       title: '名称',
@@ -77,7 +93,7 @@ const constGroupTableSetting = {
     {
       field: 'REMARK',
       title: '备注',
-      width: '190',
+      width: '150',
       align: 'left',
       RN: '1'
     }
@@ -89,6 +105,7 @@ const constGroupTableSetting = {
       onClick: (e: any) => {
         console.log(e)
         editDialogSetting.visible = true
+        editDialogSetting.title = '新增'
       }
     },
     {
@@ -128,22 +145,36 @@ const constGroupTableSetting = {
 }
 
 const editDialogSetting = reactive({
-  visible: false
+  visible: false,
+  title: ''
 })
 
-const editDialogFormData = {}
+const editDialogFormData = reactive({})
 
 const groupEditonOk = (e: any) => {
   const formData = vc.refs.constGroupEditRef.formData
-  loadingConfig.setLoadingState(true, addType)
-  addConstGroup(formData)
-    .then(() => {
-      createAddSuccessMessage()
-      return getConstGroupListWrap(1, 30)
-    })
-    .finally(() => {
-      loadingConfig.setLoadingState(false)
-    })
+  console.log(formData.ID)
+  if (formData.ID) {
+    loadingConfig.setLoadingState(true, updateType)
+    editConstGroup(formData)
+      .then((res: any) => {
+        createUpdateSuccessMessage()
+        return getConstGroupListWrap(1, 30)
+      })
+      .finally(() => {
+        loadingConfig.setLoadingState(false)
+      })
+  } else {
+    loadingConfig.setLoadingState(true, addType)
+    addConstGroup(formData)
+      .then(() => {
+        createAddSuccessMessage()
+        return getConstGroupListWrap(1, 30)
+      })
+      .finally(() => {
+        loadingConfig.setLoadingState(false)
+      })
+  }
 }
 
 //常量
@@ -162,7 +193,7 @@ const constTableSetting = {
     {
       field: 'REMARK',
       title: '备注',
-      width: '180'
+      width: '150'
     }
   ],
   buttons: [
