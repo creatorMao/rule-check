@@ -161,8 +161,14 @@ const editDialogFormData = reactive({
   ID: ''
 })
 
-const groupEditonOk = (closeDialog: Function) => {
-  const formData = vc.refs.constGroupEditRef.formData
+const groupEditonOk = async (closeDialog: Function) => {
+  const { formCheck, formData } = vc.refs.constGroupEditRef
+  const checkResult = await vc.refs.constGroupEditRef.formCheck()
+
+  if (!checkResult) {
+    return
+  }
+
   if (formData.ID) {
     openUpdateDialogLoading()
     editConstGroup(formData)

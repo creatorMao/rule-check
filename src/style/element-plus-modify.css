@@ -29,3 +29,9 @@
 .serial-number-column .cell{
   padding:0px 6px;
 }
+
+
+/* 表单项（因为有规则检验） */
+.el-form-item{
+  margin-bottom:30px;
+}

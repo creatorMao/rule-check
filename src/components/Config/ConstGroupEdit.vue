@@ -1,21 +1,19 @@
 <template>
   <div class="const-group-edit">
-    <el-form :model="formData">
-      <el-form-item label="常量组名称" label-width="140px">
+    <el-form :model="innerFormData" :rules="rules" ref="ruleFormRef">
+      <el-form-item label="常量组名称" label-width="140px" prop="GROUP_NAME">
         <el-input
           v-model="innerFormData.GROUP_NAME"
           autocomplete="off"
           input-style="width:378px"
-          maxlength="100"
         />
       </el-form-item>
-      <el-form-item label="备注" label-width="140px">
+      <el-form-item label="备注" label-width="140px" prop="REMARK">
         <el-input
           v-model="innerFormData.REMARK"
           autocomplete="off"
           type="textarea"
           input-style="width:400px;height:100px"
-          maxlength="200"
         />
       </el-form-item>
     </el-form>
@@ -23,12 +21,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { ref, onMounted, reactive, getCurrentInstance } from 'vue'
 import { getConstGroupDetail } from '../../model/config/constGroupModel'
 import {
   openQueryDialogLoading,
   closeLoading
 } from '../../helper/loadingHelper'
+import { requiredRule, max100Rule } from '../../helper/formRuleHelper'
+import type { FormInstance, FormRules } from 'element-plus'
+
+const ruleFormRef = ref<FormInstance>()
+
+const { proxy }: any = getCurrentInstance()
 
 const props = defineProps({
   formData: {
@@ -60,8 +64,18 @@ onMounted(() => {
   }
 })
 
+const formCheck = async () => {
+  return await proxy.$refs.ruleFormRef.validate((valid: any, fields: any) => {})
+}
+
 defineExpose({
-  formData: innerFormData
+  formData: innerFormData,
+  formCheck
+})
+
+const rules = reactive<FormRules>({
+  GROUP_NAME: [requiredRule, max100Rule],
+  REMARK: [max100Rule]
 })
 </script>
 
