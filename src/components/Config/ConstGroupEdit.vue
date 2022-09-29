@@ -30,8 +30,6 @@ import {
 import { requiredRule, max100Rule } from '../../helper/formRuleHelper'
 import type { FormInstance, FormRules } from 'element-plus'
 
-const ruleFormRef = ref<FormInstance>()
-
 const { proxy }: any = getCurrentInstance()
 
 const props = defineProps({
