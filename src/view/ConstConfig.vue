@@ -3,12 +3,15 @@
     <div class="box const-group height-full">
       <ConstGroup></ConstGroup>
     </div>
-    <div class="const height-full"></div>
+    <div class="const height-full">
+      <Const></Const>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import ConstGroup from '../components/Config/ConstGroup/ConstGroup.vue'
+import Const from '../components/Config/Const/Const.vue'
 </script>
 
 <style scoped>
