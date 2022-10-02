@@ -128,7 +128,7 @@ const constGroupTableSetting = {
   ],
   events: {
     rowClick: function (row: any, column: any, event: any) {
-      console.log(row, column, event)
+      emit('rowClick', row, column, event)
     }
   },
   pagination: {
@@ -180,6 +180,8 @@ const groupEditonOk = async (closeDialog: Function) => {
       })
   }
 }
+
+const emit = defineEmits(['rowClick'])
 </script>
 
 <style scoped></style>

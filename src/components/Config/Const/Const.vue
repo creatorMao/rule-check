@@ -1,6 +1,6 @@
 <template>
   <Table
-    tableTitle="常量"
+    :tableTitle="constGroupName + '-常量'"
     :loadingConfig="loadingConfig"
     :tableData="constTableData"
     :tableSetting="constTableSetting"
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, getCurrentInstance, onMounted } from 'vue'
+import { ref, reactive, getCurrentInstance, onMounted, watch } from 'vue'
 import Table from '../../Base/Table.vue'
 import ConstEdit from './ConstEdit.vue'
 import EditDialog from '../../Base/Dialog/EditDialog.vue'
@@ -24,6 +24,7 @@ import {
   updateLoadingText
 } from '../../../helper/constHelper'
 import {
+  createWarningMessage,
   createUpdateSuccessMessage,
   createDeleteSuccessMessage,
   createAddSuccessMessage
@@ -51,7 +52,7 @@ const loadingConfig = useLodingHook()
 const getConstListWrap = (pageIndex: Number, pageSize: Number) => {
   loadingConfig.setLoadingState(true, queryLoadingText)
 
-  return getConstList(pageIndex, pageSize)
+  return getConstList(pageIndex, pageSize, innerConstGroupId.value)
     .then((res: any) => {
       const { data } = res
       constTableData.length = 0
@@ -97,11 +98,15 @@ const constTableSetting = {
       RN: '1'
     }
   ],
-  initDataimmediately: true,
+  initDataimmediately: false,
   buttons: [
     {
       title: '新增',
       onClick: (e: any) => {
+        if (!innerConstGroupId.value) {
+          createWarningMessage('请先选择一个常量组！（点击常量组具体行）')
+          return
+        }
         editDialogSetting.visible = true
         editDialogSetting.title = '新增'
         editDialogFormData.ID = ''
@@ -174,6 +179,10 @@ const editonOk = async (closeDialog: Function) => {
       })
   } else {
     openAddDialogLoading()
+    console.log(innerConstGroupId)
+    console.log(innerConstGroupId.value)
+    formData.CONST_GROUP_ID = innerConstGroupId.value
+    console.log(formData)
     addConst(formData)
       .then(() => {
         createAddSuccessMessage()
@@ -185,6 +194,27 @@ const editonOk = async (closeDialog: Function) => {
       })
   }
 }
+
+const props = defineProps({
+  constGroupId: {
+    type: String,
+    required: true
+  },
+  constGroupName: {
+    type: String,
+    required: true
+  }
+})
+
+const innerConstGroupId = ref('')
+
+watch(props, (newProps: any) => {
+  if (!props.constGroupId && !innerConstGroupId.value) {
+    return
+  }
+  innerConstGroupId.value = newProps.constGroupId
+  getConstListWrap(1, 30)
+})
 </script>
 
 <style scoped></style>

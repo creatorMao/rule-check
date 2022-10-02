@@ -14,10 +14,11 @@ const editConst=(constInfo:Object)=>{
   return http.request('/config/const/edit', 'post', constInfo)
 }
 
-const getConstList = (pageIndex: Number, pageSize: Number) => {
+const getConstList = (pageIndex: Number, pageSize: Number,constGroupId:string) => {
   return http.request('/config/const/list', 'post', {
       pageIndex,
-      pageSize
+      pageSize,
+      constGroupId
     })
 }
 
