@@ -1,5 +1,5 @@
 import Home from '../view/Home.vue'
-import Const from '../components/Config/Const.vue'
+import ConstConfig from '../view/ConstConfig.vue'
 import About from '../components/Info/About.vue'
 import Route from '../components/Info/Route.vue'
 import { createRouter, createWebHashHistory } from "vue-router"
@@ -15,7 +15,7 @@ const routes = [
     children:[
       { 
         path: 'config/const', 
-        component: Const,
+        component: ConstConfig,
       },
       { 
         path: 'about', 
@@ -29,7 +29,7 @@ const routes = [
   },
   { 
     path: '/config/Const', 
-    component: Const 
+    component: ConstConfig 
   }
 ]
 

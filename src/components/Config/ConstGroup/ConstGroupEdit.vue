@@ -22,12 +22,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, getCurrentInstance } from 'vue'
-import { getConstGroupDetail } from '../../model/config/constGroupModel'
+import { getConstGroupDetail } from '../../../model/config/constGroupModel'
 import {
   openQueryDialogLoading,
   closeLoading
-} from '../../helper/loadingHelper'
-import { requiredRule, max100Rule } from '../../helper/formRuleHelper'
+} from '../../../helper/loadingHelper'
+import { requiredRule, max100Rule } from '../../../helper/formRuleHelper'
 import type { FormInstance, FormRules } from 'element-plus'
 
 const { proxy }: any = getCurrentInstance()

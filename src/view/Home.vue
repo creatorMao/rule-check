@@ -11,8 +11,6 @@
 
 <script setup lang="ts">
 import Menu from '../components/Base/Menu.vue'
-import About from '../components/Info/About.vue'
-import Const from '../components/Config/Const.vue'
 
 const menuList = [
   {
