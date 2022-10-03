@@ -131,7 +131,7 @@ const constTableSetting = {
             return getConstListWrap(1, 30)
           })
           .finally(() => {
-            closeLoading
+            closeLoading()
           })
       }
     }

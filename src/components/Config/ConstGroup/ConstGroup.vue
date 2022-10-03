@@ -121,7 +121,7 @@ const constGroupTableSetting = {
             return getConstGroupListWrap(1, 30)
           })
           .finally(() => {
-            closeLoading
+            closeLoading()
           })
       }
     }
