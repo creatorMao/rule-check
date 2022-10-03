@@ -1,6 +1,6 @@
 <template>
   <Table
-    :tableTitle="constGroupName + '-常量'"
+    :tableTitle="constGroupName"
     :loadingConfig="loadingConfig"
     :tableData="constTableData"
     :tableSetting="constTableSetting"
