@@ -36,6 +36,8 @@ declare module '@vue/runtime-core' {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Loading: typeof import('./src/components/Base/Loading.vue')['default']
     Menu: typeof import('./src/components/Base/Menu.vue')['default']
+    Param: typeof import('./src/components/Config/Param/Param.vue')['default']
+    ParamGroup: typeof import('./src/components/Config/ParamGroup/ParamGroup.vue')['default']
     Route: typeof import('./src/components/Info/Route.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
