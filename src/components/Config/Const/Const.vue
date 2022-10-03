@@ -137,9 +137,7 @@ const constTableSetting = {
     }
   ],
   events: {
-    rowClick: function (row: any, column: any, event: any) {
-      console.log(row, column, event)
-    }
+    rowClick: function (row: any, column: any, event: any) {}
   },
   pagination: {
     layout: 'thin',
@@ -160,7 +158,7 @@ const editDialogFormData = reactive({
 
 const editonOk = async (closeDialog: Function) => {
   const { formCheck, formData } = vc.refs.constEditRef
-  const checkResult = await vc.refs.constEditRef.formCheck()
+  const checkResult = await formCheck()
 
   if (!checkResult) {
     return
@@ -179,10 +177,7 @@ const editonOk = async (closeDialog: Function) => {
       })
   } else {
     openAddDialogLoading()
-    console.log(innerConstGroupId)
-    console.log(innerConstGroupId.value)
     formData.CONST_GROUP_ID = innerConstGroupId.value
-    console.log(formData)
     addConst(formData)
       .then(() => {
         createAddSuccessMessage()

@@ -150,7 +150,7 @@ const editDialogFormData = reactive({
 
 const groupEditonOk = async (closeDialog: Function) => {
   const { formCheck, formData } = vc.refs.constGroupEditRef
-  const checkResult = await vc.refs.constGroupEditRef.formCheck()
+  const checkResult = await formCheck()
 
   if (!checkResult) {
     return
