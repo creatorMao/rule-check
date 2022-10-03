@@ -7,7 +7,7 @@
     :destroy-on-close="true"
     ref="formRef"
   >
-    <slot ref="abc"></slot>
+    <slot></slot>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="onCancel">取消</el-button>
@@ -18,11 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed, getCurrentInstance, useSlots } from 'vue'
-
-const slots = useSlots()
-
-const vc = getCurrentInstance() || {}
+import { reactive, ref, computed } from 'vue'
 
 const props = defineProps({
   setting: {
