@@ -1,18 +1,18 @@
 <template>
   <div class="const-container full-fill flex-row">
     <div class="box const-group height-full">
-      <ParamGroup></ParamGroup>
+      <ReqParamGroup></ReqParamGroup>
     </div>
     <div class="const height-full">
-      <Param></Param>
+      <ReqParam></ReqParam>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import ParamGroup from '../components/Config/ParamGroup/ParamGroup.vue'
-import Param from '../components/Config/Param/Param.vue'
+import ReqParamGroup from '../components/Config/ReqParamGroup/ReqParamGroup.vue'
+import ReqParam from '../components/Config/ReqParam/ReqParam.vue'
 </script>
 
 <style scoped>

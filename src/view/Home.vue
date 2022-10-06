@@ -21,12 +21,12 @@ const menuList = [
       {
         id: '3',
         url: '/home/config/const',
-        name: '常量配置页面'
+        name: '常量配置'
       },
       {
         id: '4',
-        url: '/home/config/param',
-        name: '参数配置页面'
+        url: '/home/config/reqParam',
+        name: '请求参数配置'
       }
     ]
   },
