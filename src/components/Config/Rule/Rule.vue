@@ -1,6 +1,6 @@
 <template>
   <Table
-    tableTitle="规则"
+    tableTitle="规则列表"
     :loadingConfig="loadingConfig"
     :tableData="tableData"
     :tableSetting="tableSetting"
@@ -70,7 +70,7 @@ const tableSetting = {
     {
       field: 'REMARK',
       title: '备注',
-      width: '100',
+      width: '90',
       align: 'left',
       RN: '1'
     }

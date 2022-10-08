@@ -65,7 +65,7 @@ const menuList = [
   height: 100%;
 }
 .side {
-  width: 15vw;
+  width: 10vw;
   min-width: 200px;
   height: 100%;
 }

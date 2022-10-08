@@ -17,8 +17,8 @@ import { ref } from 'vue'
 
 <style scoped>
 .left {
-  width: 30%;
-  min-width: 300px;
+  width: 25%;
+  min-width: 200px;
 }
 .right {
   flex: 1;
