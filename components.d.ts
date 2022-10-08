@@ -45,6 +45,8 @@ declare module '@vue/runtime-core' {
     Route: typeof import('./src/components/Info/Route.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Rule: typeof import('./src/components/Config/Rule/Rule.vue')['default']
+    RuleEdit: typeof import('./src/components/Config/Rule/RuleEdit.vue')['default']
     Table: typeof import('./src/components/Base/Table.vue')['default']
     Title: typeof import('./src/components/Base/Title.vue')['default']
   }

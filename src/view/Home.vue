@@ -27,6 +27,11 @@ const menuList = [
         id: '4',
         url: '/home/config/reqParam',
         name: '请求参数配置'
+      },
+      {
+        id: '4',
+        url: '/home/config/rule',
+        name: '规则配置'
       }
     ]
   },

@@ -49,6 +49,10 @@
                 header-align="center"
                 align="center"
                 class-name="button-column"
+                v-if="
+                  tableSetting.editColumnButtons &&
+                  tableSetting.editColumnButtons.length > 0
+                "
               >
                 <template #default="scope">
                   <el-button

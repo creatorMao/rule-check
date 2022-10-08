@@ -1,6 +1,7 @@
 import Home from '../view/Home.vue'
 import ConstConfig from '../view/ConstConfig.vue'
 import ReqParamConfig from '../view/ReqParamConfig.vue'
+import RuleConfig from '../view/RuleConfig.vue'
 import About from '../components/Info/About.vue'
 import Route from '../components/Info/Route.vue'
 import { createRouter, createWebHashHistory } from "vue-router"
@@ -21,6 +22,10 @@ const routes = [
       { 
         path: 'config/reqParam', 
         component: ReqParamConfig,
+      },
+      { 
+        path: 'config/rule', 
+        component: RuleConfig,
       },
       { 
         path: 'about', 
