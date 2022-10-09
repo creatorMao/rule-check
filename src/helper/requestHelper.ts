@@ -5,13 +5,13 @@ const http: any = axios.create({
   baseURL: 'http://192.168.1.201:3000/',
 });
 
-http.interceptors.request.use(function (config) {
+http.interceptors.request.use(function (config:any) {
   return config;
-}, function (error) {
+}, function (error:any) {
   return Promise.reject(error);
 });
 
-http.interceptors.response.use(function (response) {
+http.interceptors.response.use(function (response:any) {
   return response;
 }, function (error:any) {
   const { code } = error;
@@ -26,7 +26,6 @@ http.interceptors.response.use(function (response) {
   }
   createErrorMessage(message, 2000);
 
-  
   return Promise.reject(error);
 });
 
