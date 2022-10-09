@@ -12,3 +12,9 @@ app.use(icons)
 app.mount('#app')
 app.config.globalProperties.$http=http
 
+app.config.errorHandler = (err, instance, info) => {
+  const {name,message,stack}=err
+  console.log(name);
+  console.log(message);
+  console.log(stack);
+}
