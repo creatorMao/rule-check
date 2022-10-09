@@ -96,7 +96,6 @@ const tableSetting = {
       RN: '1'
     }
   ],
-  initDataimmediately: true,
   buttons: [
     {
       title: '新增',
