@@ -13,7 +13,7 @@ http.interceptors.request.use(function (config) {
 
 http.interceptors.response.use(function (response) {
   return response;
-}, function (error) {
+}, function (error:any) {
   const { code } = error;
   console.log(error);
   let message = '请求失败！';
