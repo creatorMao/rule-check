@@ -36,7 +36,7 @@ import {
   editConstGroup,
   deleteConstGroup,
   getConstGroupList
-} from '../../../model/config/constGroupModel'
+} from '../../../api/config/constGroupModel'
 import {
   openAddDialogLoading,
   openDeleteDialogLoading,

@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, getCurrentInstance } from 'vue'
-import { getConstGroupDetail } from '../../../model/config/constGroupModel'
+import { getConstGroupDetail } from '../../../api/config/constGroupModel'
 import {
   openQueryDialogLoading,
   closeLoading

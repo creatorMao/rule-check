@@ -35,7 +35,7 @@ import {
   editConst,
   getConstList,
   getConstDetail
-} from '../../../model/config/constModel'
+} from '../../../api/config/constModel'
 import {
   openAddDialogLoading,
   openDeleteDialogLoading,

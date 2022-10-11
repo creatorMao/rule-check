@@ -36,7 +36,7 @@ import {
   deleteReqParamGroup,
   editReqParamGroup,
   getReqParamGroupList
-} from '../../../model/config/reqParamGroupModel'
+} from '../../../api/config/reqParamGroupModel'
 import {
   openAddDialogLoading,
   openDeleteDialogLoading,

@@ -29,7 +29,7 @@ import {
   deleteReqParam,
   editReqParam,
   getReqParamList
-} from '../../../model/config/reqParamModel'
+} from '../../../api/config/reqParamModel'
 import {
   openAddDialogLoading,
   openDeleteDialogLoading,

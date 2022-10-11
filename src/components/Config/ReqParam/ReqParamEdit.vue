@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, getCurrentInstance } from 'vue'
-import { getReqParamDetail } from '../../../model/config/reqParamModel'
+import { getReqParamDetail } from '../../../api/config/reqParamModel'
 import {
   openQueryDialogLoading,
   closeLoading

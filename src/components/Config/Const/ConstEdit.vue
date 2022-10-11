@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, getCurrentInstance } from 'vue'
-import { getConstDetail } from '../../../model/config/constModel'
+import { getConstDetail } from '../../../api/config/constModel'
 import {
   openQueryDialogLoading,
   closeLoading
