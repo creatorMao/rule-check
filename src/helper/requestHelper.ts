@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { createErrorMessage } from './messageHelper'
+import configJson from '../config.json'
 
 const http: any = axios.create({
-  baseURL: 'http://192.168.1.201:3000/',
+  baseURL: configJson.apiBaseURL,
 });
 
 http.interceptors.request.use(function (config:any) {
