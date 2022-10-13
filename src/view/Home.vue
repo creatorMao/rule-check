@@ -71,8 +71,8 @@ const onClick = (componentName: string) => {
 import ConstConfig from '../view/ConstConfig.vue'
 import ReqParamConfig from '../view/ReqParamConfig.vue'
 import RuleConfig from '../view/RuleConfig.vue'
-import About from '../components/Info/About.vue'
-import Route from '../components/Info/Route.vue'
+import About from '../view/About.vue'
+import Route from '../view/Route.vue'
 
 export default {
   components: {
