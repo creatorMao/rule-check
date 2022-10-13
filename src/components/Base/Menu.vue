@@ -1,6 +1,5 @@
 <template>
   <el-menu
-    router
     :default-active="defaultActive"
     :default-openeds="opens"
     ref="innerMenu"
@@ -14,12 +13,13 @@
         <el-icon>
           <component :is="menuGroup.icon"></component>
         </el-icon>
-        <span>{{ menuGroup.name }}</span>
+        <span>{{ menuGroup.title }}</span>
       </template>
       <el-menu-item
         v-for="(menuItem, menuItemIndex) in menuGroup.children"
-        :index="menuItem.url"
-        >{{ menuItem.name }}</el-menu-item
+        :index="menuItem.name"
+        @click="onClick(menuItem.name)"
+        >{{ menuItem.title }}</el-menu-item
       >
     </el-sub-menu>
   </el-menu>
@@ -38,7 +38,7 @@ const props = defineProps({
   },
   openAll: Boolean,
   defaultOpeneds: Object,
-  defaultActive: Object
+  defaultActive: String
 })
 
 const opens = computed(() => {
@@ -55,12 +55,14 @@ const defaultActive = computed(() => {
   if (props.defaultActive) {
     return props.defaultActive
   }
-  return props.menuList[0].children[0].url
+  return props.menuList[0].children[0].name
 })
 
-onMounted(() => {
-  router.push(defaultActive.value)
-})
+const emit = defineEmits(['onClick'])
+
+const onClick = (componentName: string) => {
+  emit('onClick', componentName)
+}
 </script>
 
 <style scoped>
